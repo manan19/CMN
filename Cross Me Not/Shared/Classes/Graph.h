@@ -14,6 +14,7 @@ typedef struct {
 	@public int edgeCount;
 	@public int selectedVertex;
 	@public int connectedVertices[MAX_VERTEX_COUNT];
+	@public int numberOfIntersectionsForEdge[MAX_EDGE_COUNT];
 }
 
 -(int)checkGraphForIntersections;

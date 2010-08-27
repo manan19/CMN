@@ -13,6 +13,10 @@
 	{
 		connectedVertices[i] = 0;
 	}
+	for (int i = 0 ; i < MAX_EDGE_COUNT ; i++) 
+	{
+		numberOfIntersectionsForEdge[i] = 0;
+	}
 	return self;
 }
 
@@ -63,6 +67,11 @@
 -(int)checkGraphForIntersections
 {
 	int numberOfIntersections = 0;
+	for (int i=0 ; i < edgeCount; i++)
+	{
+		numberOfIntersectionsForEdge[i] = 0;
+	}
+	
 	for(int i = 0 ; i < edgeCount - 1 ; i ++)
 	{
 		for (int  j = i+1 ; j < edgeCount ; j++) 
@@ -77,6 +86,8 @@
 								  Point4:vertices[edges[j].vert2] ] )
 				{
 					numberOfIntersections++;
+					numberOfIntersectionsForEdge[i]++;
+					numberOfIntersectionsForEdge[j]++;
 				}
 			}
 		}

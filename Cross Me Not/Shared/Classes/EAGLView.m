@@ -263,11 +263,18 @@
 		renderer->graph->edgeCount = 36;
 	}
 	
+	for (int i = 0 ; i < renderer->graph->edgeCount ; i++) 
+	{
+		renderer->graph->numberOfIntersectionsForEdge[i] = 0;
+	}
+	
 	if ([renderer->graph checkGraphForIntersections] <= (lvl+1)*2)
 	{
 		[self initGraph:lvl];
 		return;
 	}
+	
+
 	
 	[self layoutSubviews];
 }
@@ -357,6 +364,9 @@
 			renderer->graph->vertices[selectedVertex].x = location.x;
 			renderer->graph->vertices[selectedVertex].y = MIN(location.y,GAME_Y_MAX);
 		}
+		
+		[renderer->graph checkGraphForIntersections];
+		
 		[renderer render];
 	}
 }

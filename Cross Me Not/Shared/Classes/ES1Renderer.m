@@ -54,18 +54,38 @@
 		
 		lineVertices[i*12] = (graph->vertices[graph->edges[i].vert1].x / (backingWidth/2) ) - 1;
 		lineVertices[i*12+1] = -(graph->vertices[graph->edges[i].vert1].y / (backingHeight/2) ) + 1;
-		lineVertices[i*12+2] = 0.0;
-		lineVertices[i*12+3] = 0.0;
-		lineVertices[i*12+4] = 0.0;
+		if( graph->numberOfIntersectionsForEdge[i] > 0 )
+		{
+			lineVertices[i*12+2] = 0.0;
+			lineVertices[i*12+3] = 0.0;
+			lineVertices[i*12+4] = 0.0;
+		}
+		else 
+		{
+			lineVertices[i*12+2] = 0.0;
+			lineVertices[i*12+3] = 1.0;
+			lineVertices[i*12+4] = 0.0;
+		}
 		lineVertices[i*12+5] = 1.0;
 		
 		
 		lineVertices[i*12+6] = (graph->vertices[graph->edges[i].vert2].x / (backingWidth/2) ) - 1;
 		lineVertices[i*12+7] = -(graph->vertices[graph->edges[i].vert2].y / (backingHeight/2) ) + 1;
-		lineVertices[i*12+8] = 0.0;
-		lineVertices[i*12+9] = 0.0;
-		lineVertices[i*12+10] = 0.0;
+		if( graph->numberOfIntersectionsForEdge[i] > 0 )
+		{
+			lineVertices[i*12+8] = 0.0;
+			lineVertices[i*12+9] = 0.0;
+			lineVertices[i*12+10] = 0.0;
+		}
+		else 
+		{
+			lineVertices[i*12+8] = 0.0;
+			lineVertices[i*12+9] = 1.0;
+			lineVertices[i*12+10] = 0.0;
+		}
 		lineVertices[i*12+11] = 1.0;
+		
+		//graph->cleanEdges[i] = 0;
 	}
 	
 		// RENDERING LINES
