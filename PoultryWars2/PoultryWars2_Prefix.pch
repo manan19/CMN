@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'PoultryWars1.1' target in the 'PoultryWars1.1' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
