@@ -25,6 +25,9 @@
 			// Get the layer
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 		
+		GAME_X_MAX = [UIScreen mainScreen].currentMode.size.width;
+		GAME_Y_MAX = [UIScreen mainScreen].currentMode.size.height;
+		
         eaglLayer.opaque = TRUE;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
@@ -41,6 +44,17 @@
                 return nil;
             }
         }
+		
+		if (GAME_X_MAX > 320) 
+		{
+				// It's the iPhone4
+			renderer->scale = 2;
+			eaglLayer.contentsScale = 2;
+		}
+		else 
+		{
+			renderer->scale = 1;
+		}
 		
 		playingGame = FALSE;
 		aView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Well Done",@"") message:NSLocalizedString(@"What would you like to do?",@"") delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Play Again",@""),NSLocalizedString(@"Play Next Level",@""),NSLocalizedString(@"Go Back To Menu",@""),NSLocalizedString(@"Stare at your Success",@""),nil];
@@ -303,6 +317,8 @@
 	{
 		UITouch *touch = [touches anyObject];
 		CGPoint location = [touch locationInView:touch.view];
+		location.x = location.x * renderer->scale;
+		location.y = location.y * renderer->scale;
 		
 		for (int i=0; i < renderer->graph->vertexCount; i++)
 		{
@@ -333,6 +349,8 @@
 	{
 		UITouch *touch = [touches anyObject];
 		CGPoint location = [touch locationInView:touch.view];
+		location.x = location.x * renderer->scale;
+		location.y = location.y * renderer->scale;
 		
 		if (selectedVertex >= 0 && selectedVertex < renderer->graph->vertexCount) 
 		{

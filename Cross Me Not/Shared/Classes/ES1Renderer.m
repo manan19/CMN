@@ -73,7 +73,7 @@
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_LINE_SMOOTH);
-	glLineWidth(3.0f);
+	glLineWidth(3.0f*scale);
 	glVertexPointer(2, GL_FLOAT, 24, lineVertices);
 	glColorPointer(4, GL_FLOAT, 24, &lineVertices[2]);
 	glDrawArrays(GL_LINES, 0, 2 * graph->edgeCount);
@@ -100,7 +100,7 @@
 	
 		// RENDERING VERTICES
 	glEnable(GL_POINT_SMOOTH);
-	glPointSize(12.0);
+	glPointSize(12.0*scale);
 	glVertexPointer(2, GL_FLOAT, 24, points);
 	glColorPointer(4, GL_FLOAT, 24, &points[2]);
 	glDrawArrays(GL_POINTS, 0, graph->vertexCount);

@@ -7,8 +7,7 @@
 	//
 
 #import <UIKit/UIKit.h>
-#import "AdMobDelegateProtocol.h"
-#import "AdMobView.h"
+#import <iAd/ADBannerView.h>
 
 #define MAX_LEVELS	10
 
@@ -16,21 +15,23 @@
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,AdMobDelegate,UIPickerViewDelegate, UIPickerViewDataSource> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate> 
 {
 @public
 	IBOutlet UIWindow *window;
 	IBOutlet UIView *placeHolderView;
+	IBOutlet UIViewController *placeHolderViewController;
 	IBOutlet UIView *menuView;
 	IBOutlet UIView *infoView;
 	IBOutlet UILabel *timerLabel;
 	IBOutlet UILabel *bestTimeLabel;
 	IBOutlet EAGLView *glView;
-	AdMobView *adView;
+	ADBannerView *adView;
 	int currentLevel;
 	NSDate *timeCounter;
 	double frameRate,time;
 	NSMutableDictionary *bestTimes;
+	BOOL appActive;
 }
 
 - (IBAction)menuButton:(id)sender;
@@ -44,6 +45,7 @@
 @property (nonatomic, retain) IBOutlet UIView *menuView;
 @property (nonatomic, retain) IBOutlet UIView *infoView;
 @property (nonatomic, retain) IBOutlet UIView *placeHolderView;
+@property (nonatomic, retain) IBOutlet UIViewController *placeHolderViewController;
 @property (nonatomic, retain) IBOutlet UILabel *timerLabel;
 @property (nonatomic, retain) IBOutlet UILabel *bestTimeLabel;
 

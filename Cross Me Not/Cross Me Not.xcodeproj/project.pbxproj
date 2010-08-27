@@ -12,10 +12,6 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2860E328111B887F00E27156 /* AppDelegate_Phone.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* AppDelegate_Phone.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		5955DB3011558C21001C813A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB2F11558C21001C813A /* AddressBook.framework */; };
-		5955DB3211558C21001C813A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB3111558C21001C813A /* AudioToolbox.framework */; };
-		5955DB3611558C21001C813A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB3511558C21001C813A /* MediaPlayer.framework */; };
-		5955DB3811558C21001C813A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB3711558C21001C813A /* MessageUI.framework */; };
 		5955DB3A11558C21001C813A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB3911558C21001C813A /* OpenGLES.framework */; };
 		5955DB3C11558C21001C813A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5955DB3B11558C21001C813A /* QuartzCore.framework */; };
 		5955DB6E11558F62001C813A /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5955DB6511558F62001C813A /* EAGLView.m */; };
@@ -23,7 +19,6 @@
 		5955DB7011558F62001C813A /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5955DB6911558F62001C813A /* ES2Renderer.m */; };
 		5955DB7111558F62001C813A /* ESRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5955DB6B11558F62001C813A /* ESRenderer.m */; };
 		5955DB7211558F62001C813A /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 5955DB6D11558F62001C813A /* Graph.m */; };
-		59B9BA4F1176F6FC0090740A /* libAdMob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59B9BA4E1176F6FC0090740A /* libAdMob.a */; };
 		59B9BA851176F7770090740A /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA701176F7770090740A /* CDataScanner.m */; };
 		59B9BA861176F7770090740A /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA731176F7770090740A /* CDataScanner_Extensions.m */; };
 		59B9BA871176F7770090740A /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA751176F7770090740A /* NSCharacterSet_Extensions.m */; };
@@ -34,6 +29,8 @@
 		59B9BA8C1176F7770090740A /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA801176F7770090740A /* CJSONScanner.m */; };
 		59B9BA8D1176F7770090740A /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA821176F7770090740A /* CJSONSerializer.m */; };
 		59B9BA8E1176F7770090740A /* CSerializedJSONData.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B9BA841176F7770090740A /* CSerializedJSONData.m */; };
+		59CCD927122784BF00C35FF3 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CCD926122784BF00C35FF3 /* iAd.framework */; };
+		59CCDAF11227B35E00C35FF3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59CCDAF01227B35E00C35FF3 /* Icon@2x.png */; };
 		59D109FB115614F800A1C2DD /* flip.gif in Resources */ = {isa = PBXBuildFile; fileRef = 59D109FA115614F800A1C2DD /* flip.gif */; };
 		59E4120811562F1800BCA756 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E4120711562F1800BCA756 /* Default.png */; };
 		59F2ACA61156B119003BA387 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59F2ACA51156B119003BA387 /* InfoPlist.strings */; };
@@ -53,10 +50,6 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Cross_Me_Not_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cross_Me_Not_Prefix.pch; sourceTree = "<group>"; };
-		5955DB2F11558C21001C813A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		5955DB3111558C21001C813A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		5955DB3511558C21001C813A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		5955DB3711558C21001C813A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5955DB3911558C21001C813A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		5955DB3B11558C21001C813A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5955DB6411558F62001C813A /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
@@ -72,7 +65,6 @@
 		5955DB8F1155907B001C813A /* AdMobDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobDelegateProtocol.h; sourceTree = "<group>"; };
 		5955DB901155907B001C813A /* AdMobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobView.h; sourceTree = "<group>"; };
 		5955DD201155B9DA001C813A /* English */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = English; path = English.lproj/Default.png; sourceTree = "<group>"; };
-		59B9BA4E1176F6FC0090740A /* libAdMob.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdMob.a; sourceTree = "<group>"; };
 		59B9BA6F1176F7770090740A /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		59B9BA701176F7770090740A /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		59B9BA721176F7770090740A /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -93,6 +85,8 @@
 		59B9BA821176F7770090740A /* CJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializer.m; sourceTree = "<group>"; };
 		59B9BA831176F7770090740A /* CSerializedJSONData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSerializedJSONData.h; sourceTree = "<group>"; };
 		59B9BA841176F7770090740A /* CSerializedJSONData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSerializedJSONData.m; sourceTree = "<group>"; };
+		59CCD926122784BF00C35FF3 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		59CCDAF01227B35E00C35FF3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		59D109FA115614F800A1C2DD /* flip.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flip.gif; sourceTree = "<group>"; };
 		59E4120A11562F6B00BCA756 /* de */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = de; path = de.lproj/Default.png; sourceTree = "<group>"; };
 		59E4120B11562F6F00BCA756 /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/Default.png; sourceTree = "<group>"; };
@@ -129,7 +123,7 @@
 		59F2B00811570D65003BA387 /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/info.png; sourceTree = "<group>"; };
 		59F2B00911570D68003BA387 /* zh */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zh; path = zh.lproj/info.png; sourceTree = "<group>"; };
 		59F2B00A11570D6A003BA387 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/info.png; sourceTree = "<group>"; };
-		59F2B09C1157374B003BA387 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		59F2B09C1157374B003BA387 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Cross_Me_Not-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cross_Me_Not-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,13 +135,9 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				5955DB3011558C21001C813A /* AddressBook.framework in Frameworks */,
-				5955DB3211558C21001C813A /* AudioToolbox.framework in Frameworks */,
-				5955DB3611558C21001C813A /* MediaPlayer.framework in Frameworks */,
-				5955DB3811558C21001C813A /* MessageUI.framework in Frameworks */,
 				5955DB3A11558C21001C813A /* OpenGLES.framework in Frameworks */,
 				5955DB3C11558C21001C813A /* QuartzCore.framework in Frameworks */,
-				59B9BA4F1176F6FC0090740A /* libAdMob.a in Frameworks */,
+				59CCD927122784BF00C35FF3 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +166,8 @@
 		28EEBF621118D79A00187D67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				59CCDAF01227B35E00C35FF3 /* Icon@2x.png */,
+				59F2B09C1157374B003BA387 /* Icon.png */,
 				5955DCFB1155AF01001C813A /* Resources */,
 				5955DB8E1155907B001C813A /* AdMob */,
 				5955DB6311558F62001C813A /* Classes */,
@@ -211,12 +203,9 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
-				5955DB2F11558C21001C813A /* AddressBook.framework */,
-				5955DB3111558C21001C813A /* AudioToolbox.framework */,
-				5955DB3511558C21001C813A /* MediaPlayer.framework */,
-				5955DB3711558C21001C813A /* MessageUI.framework */,
 				5955DB3911558C21001C813A /* OpenGLES.framework */,
 				5955DB3B11558C21001C813A /* QuartzCore.framework */,
+				59CCD926122784BF00C35FF3 /* iAd.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -243,7 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				59B9BA6E1176F7770090740A /* TouchJSON */,
-				59B9BA4E1176F6FC0090740A /* libAdMob.a */,
 				5955DB8F1155907B001C813A /* AdMobDelegateProtocol.h */,
 				5955DB901155907B001C813A /* AdMobView.h */,
 			);
@@ -254,7 +242,6 @@
 		5955DCFB1155AF01001C813A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				59F2B09C1157374B003BA387 /* Icon.png */,
 				59F2B00411570D5A003BA387 /* info.png */,
 				59F2AE651156F0B0003BA387 /* Localizable.strings */,
 				59F2ACA51156B119003BA387 /* InfoPlist.strings */,
@@ -370,6 +357,7 @@
 				59F2AE661156F0B0003BA387 /* Localizable.strings in Resources */,
 				59F2B00511570D5A003BA387 /* info.png in Resources */,
 				59F2B09E1157374B003BA387 /* Icon.png in Resources */,
+				59CCDAF11227B35E00C35FF3 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +476,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -499,6 +488,8 @@
 					"\"$(SRCROOT)/Shared/AdMob\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -506,6 +497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cross_Me_Not_Prefix.pch;
@@ -515,6 +507,8 @@
 					"\"$(SRCROOT)/Shared/AdMob\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -523,15 +517,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Manan Patel";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 2.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82B85356-FCCD-4858-86D8-60CBAF1E8951";
+				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Distribution;
@@ -540,7 +534,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Manan Patel";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Cross_Me_Not_Prefix.pch;
@@ -551,8 +545,8 @@
 					"\"$(SRCROOT)/Shared/AdMob\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9584D392-46FF-4000-93E3-49248CF9EB78";
-				SDKROOT = iphoneos3.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -561,14 +555,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Manan Patel";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 2.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82B85356-FCCD-4858-86D8-60CBAF1E8951";
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -576,15 +571,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Manan Patel";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 2.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82B85356-FCCD-4858-86D8-60CBAF1E8951";
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

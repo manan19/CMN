@@ -15,6 +15,7 @@
 {
 @public	
 	Graph *graph;
+	uint scale;
 }
 - (void)render;
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
