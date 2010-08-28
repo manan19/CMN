@@ -16,7 +16,7 @@
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, /*SKProductsRequestDelegate,*/ SKPaymentTransactionObserver> 
 {
 @public
 	IBOutlet UIWindow *window;
@@ -29,13 +29,14 @@
 	IBOutlet EAGLView *glView;
 	NSMutableDictionary *bestTimes;
 
-	SKProductsRequest* productRequest;
+		//SKProductsRequest* productRequest;
+		//SKProduct* productAdFree;
 	NSString* productIdentifierAdFree;
 	NSDate *timeCounter;
 	ADBannerView *adView;
 
 	int currentLevel;
-	BOOL appActive;
+	BOOL appActive, adFree;
 	double frameRate,time;
 }
 
@@ -43,10 +44,13 @@
 - (IBAction)startGame:(id)sender;
 - (IBAction)infoButton:(id)sender;
 - (void)loadBestTimes;
-- (void)requestProductData;
+	//- (void)requestProductData;
+- (void) buyAdFree:(id)sender;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;
+- (void) provideContent: (NSString *)productIdentifier;
+
 
 @property (nonatomic, retain) NSMutableDictionary *bestTimes;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
