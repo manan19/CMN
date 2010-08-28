@@ -45,6 +45,7 @@
 	[menuView addSubview:adView];
 	
 	[self loadBestTimes];
+	[self requestProductData];
 	
 	[NSTimer scheduledTimerWithTimeInterval:(1/60) target:self selector:@selector(update) userInfo:nil repeats:YES];
 	
@@ -87,77 +88,44 @@
 {
 }
 
-	//#pragma mark -
-	//#pragma mark AdMobDelegate methods
-	//- (NSString *)publisherId 
-	//{
-	//	return @"a14b84284a8b3d3"; // this should be prefilled; if not, get it from www.admob.com
-	//}
-	//
-	//- (UIViewController *)currentViewController
-	//{
-	//	return nil;
-	//}
-	//
-	//- (UIColor *)adBackgroundColor 
-	//{
-	//	return [UIColor colorWithRed:0.851 green:0.89 blue:0.925 alpha:1]; // this should be prefilled; if not, provide a UIColor
-	//}
-	//
-	//- (UIColor *)primaryTextColor 
-	//{
-	//	return [UIColor colorWithRed:0.298 green:0.345 blue:0.416 alpha:1]; // this should be prefilled; if not, provide a UIColor
-	//}
-	//
-	//- (UIColor *)secondaryTextColor 
-	//{
-	//	return [UIColor colorWithRed:0.298 green:0.345 blue:0.416 alpha:1]; // this should be prefilled; if not, provide a UIColor
-	//}
-	//
-	//- (BOOL)mayAskForLocation 
-	//{
-	//	return NO; // this should be prefilled; if not, see AdMobProtocolDelegate.h for instructions
-	//}
-	//
-	//	// To receive test ads rather than real ads...
-	//	//- (BOOL)useTestAd 
-	//	//{
-	//	//	return YES;
-	//	//}
-	//	//
-	//	//- (NSString *)testAdAction 
-	//	//{
-	//	//	return @"url"; // see AdMobDelegateProtocol.h for a listing of valid values here
-	//	//}
-	//
-	//
-	//	// Sent when an ad request loaded an ad; this is a good opportunity to attach
-	//	// the ad view to the hierachy.
-	//- (void)didReceiveAd:(AdMobView *)receivedAdView 
-	//{
-	//	NSLog(@"AdMob: Did receive ad");
-	//	
-	//		// put the ad at the top of the screen
-	//	adView.frame = CGRectMake(glView->GAME_X_MAX/2 - 160 , glView->GAME_Y_MAX - 48 , 320, 48);
-	//	[menuView addSubview:adView];
-	//	
-	//	[NSTimer scheduledTimerWithTimeInterval:AD_REFRESH_PERIOD target:adView	selector:@selector(requestFreshAd) userInfo:nil repeats:NO];
-	//}
-	//
-	//	// Sent when an ad request failed to load an ad
-	//- (void)didFailToReceiveAd:(AdMobView *)receivedAdView {
-	//	NSLog(@"AdMob: Did fail to receive ad");
-	//	
-	//		// release the older admobview
-	//	[adView release];
-	//	adView = nil;
-	//	
-	//		// we could start a new ad request here, but in the interests of the user's battery life, let's not
-	//	[NSTimer scheduledTimerWithTimeInterval:AD_REFRESH_PERIOD target:adView	selector:@selector(requestFreshAd) userInfo:nil repeats:NO];
-	//}
+#pragma mark -
+#pragma mark SKProductsRequestDelegate
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+	NSArray *myProduct = response.products;
+
+	for(int i=0;i<[myProduct count];i++)
+	{
+		SKProduct *product = [myProduct objectAtIndex:i];
+		NSLog(@"Name: %@ - Price: %f",[product localizedTitle],[[product price] doubleValue]);
+		NSLog(@"Product identifier: %@", [product productIdentifier]);
+	}
+}
 
 #pragma mark -
-#pragma mark UIPickerViewDelegate
+#pragma mark SKPaymentTransactionObserver
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+	for (SKPaymentTransaction *transaction in transactions)
+	{
+		switch (transaction.transactionState)
+		{
+			case SKPaymentTransactionStatePurchased:
+				[self completeTransaction:transaction];
+				break;
+			case SKPaymentTransactionStateFailed:
+				[self failedTransaction:transaction];
+				break;
+			case SKPaymentTransactionStateRestored:
+				[self restoreTransaction:transaction];
+			default:
+				break;
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark UIPickerViewDataSource
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -211,6 +179,19 @@
 	}
 }
 
+- (void) requestProductData
+{
+	productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: @"com.mp.crossmenot"]];
+	[productRequest setDelegate:self];
+	[productRequest start];
+}
+
+-(void) buyRemoveAdsConfirmed
+{
+	SKPayment *payment = [SKPayment paymentWithProductIdentifier:productIdentifierAdFree];
+	[[SKPaymentQueue defaultQueue] addPayment:payment];
+}
+
 - (void) loadBestTimes 
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -227,6 +208,40 @@
 	else
 		[bestTimeLabel setText:prevBest];
 	
+}
+
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction
+{
+	if (transaction.error.code != SKErrorPaymentCancelled)
+	{
+		// Optionally, display an error here.
+	}
+	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction
+{
+	//If you want to save the transaction
+	// [self recordTransaction: transaction];
+	
+	//Provide the new content
+	// [self provideContent: transaction.originalTransaction.payment.productIdentifier];
+	
+	//Finish the transaction
+	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+	
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction
+{
+	//If you want to save the transaction
+	// [self recordTransaction: transaction];
+	
+	//Provide the new content
+	//[self provideContent: transaction.payment.productIdentifier];
+	
+	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
 - (IBAction)menuButton:(id)sender

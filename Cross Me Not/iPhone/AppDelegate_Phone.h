@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <iAd/ADBannerView.h>
+#import <StoreKit/StoreKit.h>
 
 #define MAX_LEVELS	10
 
@@ -15,7 +16,7 @@
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver> 
 {
 @public
 	IBOutlet UIWindow *window;
@@ -26,18 +27,26 @@
 	IBOutlet UILabel *timerLabel;
 	IBOutlet UILabel *bestTimeLabel;
 	IBOutlet EAGLView *glView;
-	ADBannerView *adView;
-	int currentLevel;
-	NSDate *timeCounter;
-	double frameRate,time;
 	NSMutableDictionary *bestTimes;
+
+	SKProductsRequest* productRequest;
+	NSString* productIdentifierAdFree;
+	NSDate *timeCounter;
+	ADBannerView *adView;
+
+	int currentLevel;
 	BOOL appActive;
+	double frameRate,time;
 }
 
 - (IBAction)menuButton:(id)sender;
 - (IBAction)startGame:(id)sender;
 - (IBAction)infoButton:(id)sender;
 - (void)loadBestTimes;
+- (void)requestProductData;
+- (void) failedTransaction: (SKPaymentTransaction *)transaction;
+- (void) restoreTransaction: (SKPaymentTransaction *)transaction;
+- (void) completeTransaction: (SKPaymentTransaction *)transaction;
 
 @property (nonatomic, retain) NSMutableDictionary *bestTimes;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -48,6 +57,7 @@
 @property (nonatomic, retain) IBOutlet UIViewController *placeHolderViewController;
 @property (nonatomic, retain) IBOutlet UILabel *timerLabel;
 @property (nonatomic, retain) IBOutlet UILabel *bestTimeLabel;
+
 
 @end
 
