@@ -25,9 +25,6 @@
 			// Get the layer
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 		
-		GAME_X_MAX = [UIScreen mainScreen].currentMode.size.width;
-		GAME_Y_MAX = [UIScreen mainScreen].currentMode.size.height;
-		
         eaglLayer.opaque = TRUE;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
@@ -45,7 +42,11 @@
             }
         }
 		
-		if (GAME_X_MAX > 320) 
+		
+		screenWidth = [UIScreen mainScreen].currentMode.size.width;
+		screenHeight = [UIScreen mainScreen].currentMode.size.height;
+		
+		if (screenWidth > 320) 
 		{
 				// It's the iPhone4
 			renderer->scale = 2;
@@ -62,219 +63,10 @@
 	return self;
 }
 
-- (void) initGraph:(int) lvl
+- (void) newGraph:(int) lvl
 {
 	[renderer->graph release];
-	renderer->graph = [Graph new];
-	
-	if(lvl >= 0)
-	{
-		renderer->graph->vertices[0].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[0].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[1].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[1].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[2].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[2].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[3].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[3].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[4].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[4].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[5].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[5].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 6;
-		
-		renderer->graph->edges[0].vert1 = 0;
-		renderer->graph->edges[0].vert2 = 1;
-		renderer->graph->edges[1].vert1 = 0;
-		renderer->graph->edges[1].vert2 = 2;
-		renderer->graph->edges[2].vert1 = 0;
-		renderer->graph->edges[2].vert2 = 3;
-		renderer->graph->edges[3].vert1 = 1;
-		renderer->graph->edges[3].vert2 = 3;
-		renderer->graph->edges[4].vert1 = 2;
-		renderer->graph->edges[4].vert2 = 4;
-		renderer->graph->edges[5].vert1 = 3;
-		renderer->graph->edges[5].vert2 = 4;
-		renderer->graph->edges[6].vert1 = 3;
-		renderer->graph->edges[6].vert2 = 5;
-		renderer->graph->edges[7].vert1 = 4;
-		renderer->graph->edges[7].vert2 = 5;
-		
-		renderer->graph->edgeCount = 8;
-	}	
-	if(lvl >= 1)
-	{
-		renderer->graph->vertices[6].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[6].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[7].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[7].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 8;
-		
-		renderer->graph->edges[8].vert1 = 6;
-		renderer->graph->edges[8].vert2 = 5;
-		renderer->graph->edges[9].vert1 = 6;
-		renderer->graph->edges[9].vert2 = 7;
-		renderer->graph->edges[10].vert1 = 1;
-		renderer->graph->edges[10].vert2 = 7;
-		
-		renderer->graph->edgeCount = 11;
-	}
-	if(lvl >= 2)
-	{
-		renderer->graph->vertices[8].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[8].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 9;
-		
-		renderer->graph->edges[11].vert1 = 1;
-		renderer->graph->edges[11].vert2 = 6;
-		renderer->graph->edges[12].vert1 = 5;
-		renderer->graph->edges[12].vert2 = 8;
-		renderer->graph->edges[13].vert1 = 6;
-		renderer->graph->edges[13].vert2 = 8;
-		
-		renderer->graph->edgeCount = 14;
-	}
-	if(lvl >= 3)
-	{
-		
-		renderer->graph->vertices[9].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[9].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[10].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[10].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 11;
-		
-		renderer->graph->edges[14].vert1 = 9;
-		renderer->graph->edges[14].vert2 = 4;
-		renderer->graph->edges[15].vert1 = 9;
-		renderer->graph->edges[15].vert2 = 8;
-		renderer->graph->edges[16].vert1 = 8;
-		renderer->graph->edges[16].vert2 = 10;
-		renderer->graph->edges[17].vert1 = 9;
-		renderer->graph->edges[17].vert2 = 10;
-		
-		renderer->graph->edgeCount = 18;
-	}
-	if(lvl >= 4)
-	{
-		renderer->graph->vertices[11].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[11].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[12].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[12].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 13;
-		
-		renderer->graph->edges[18].vert1 = 0;
-		renderer->graph->edges[18].vert2 = 11;
-		renderer->graph->edges[19].vert1 = 11;
-		renderer->graph->edges[19].vert2 = 12;
-		renderer->graph->edges[20].vert1 = 7;
-		renderer->graph->edges[20].vert2 = 12;
-		
-		renderer->graph->edgeCount = 21;
-	}
-	if(lvl >= 5)
-	{
-		renderer->graph->vertices[13].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[13].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[14].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[14].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 15;
-		
-		renderer->graph->edges[21].vert1 = 7;
-		renderer->graph->edges[21].vert2 = 13;
-		renderer->graph->edges[22].vert1 = 13;
-		renderer->graph->edges[22].vert2 = 14;
-		renderer->graph->edges[23].vert1 = 12;
-		renderer->graph->edges[23].vert2 = 14;
-		
-		renderer->graph->edgeCount = 24;
-	}
-	if(lvl >= 6)
-	{
-		renderer->graph->vertices[15].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[15].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 16;
-		
-		renderer->graph->edges[24].vert1 = 12;
-		renderer->graph->edges[24].vert2 = 13;
-		renderer->graph->edges[25].vert1 = 9;
-		renderer->graph->edges[25].vert2 = 15;
-		renderer->graph->edges[26].vert1 = 10;
-		renderer->graph->edges[26].vert2 = 15;
-		
-		renderer->graph->edgeCount = 27;
-	}
-	if(lvl >= 7)
-	{
-		renderer->graph->vertices[16].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[16].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[17].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[17].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 18;
-		
-		renderer->graph->edges[27].vert1 = 2;
-		renderer->graph->edges[27].vert2 = 16;
-		renderer->graph->edges[28].vert1 = 16;
-		renderer->graph->edges[28].vert2 = 17;
-		renderer->graph->edges[29].vert1 = 11;
-		renderer->graph->edges[29].vert2 = 17;
-		
-		renderer->graph->edgeCount = 30;
-	}
-	if(lvl >= 8)
-	{	
-		renderer->graph->vertices[18].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[18].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		renderer->graph->vertices[19].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[19].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 20;
-		
-		renderer->graph->edges[30].vert1 = 18;
-		renderer->graph->edges[30].vert2 = 17;
-		renderer->graph->edges[31].vert1 = 18;
-		renderer->graph->edges[31].vert2 = 19;
-		renderer->graph->edges[32].vert1 = 14;
-		renderer->graph->edges[32].vert2 = 19;
-		
-		renderer->graph->edgeCount = 33;
-	}
-	if(lvl >= 9)
-	{
-		renderer->graph->vertices[20].x = arc4random()%(GAME_X_MAX-10) + 5;
-		renderer->graph->vertices[20].y = arc4random()%(GAME_Y_MAX-10) + 5;
-		
-		renderer->graph->vertexCount = 21;
-		
-		renderer->graph->edges[33].vert1 = 17;
-		renderer->graph->edges[33].vert2 = 20;
-		renderer->graph->edges[34].vert1 = 18;
-		renderer->graph->edges[34].vert2 = 20;
-		renderer->graph->edges[35].vert1 = 11;
-		renderer->graph->edges[35].vert2 = 18;
-		
-		renderer->graph->edgeCount = 36;
-	}
-	
-	for (int i = 0 ; i < renderer->graph->edgeCount ; i++) 
-	{
-		renderer->graph->numberOfIntersectionsForEdge[i] = 0;
-	}
-	
-	if ([renderer->graph checkGraphForIntersections] <= (lvl+1)*2)
-	{
-		[self initGraph:lvl];
-		return;
-	}
-	
-
+	renderer->graph = [[Graph alloc] initGraph:lvl clippingRect:clippingRect];
 	
 	[self layoutSubviews];
 }
@@ -324,15 +116,19 @@
 	{
 		UITouch *touch = [touches anyObject];
 		CGPoint location = [touch locationInView:touch.view];
+		int leastDistance = 625;
+		int thisDistance;
+		
 		location.x = location.x * renderer->scale;
 		location.y = location.y * renderer->scale;
 		
 		for (int i=0; i < renderer->graph->vertexCount; i++)
 		{
-			if ([self distanceSquared:renderer->graph->vertices[i] p2:location] < 625)
+			thisDistance = [self distanceSquared:renderer->graph->vertices[i] p2:location];
+			if (thisDistance < leastDistance)
 			{
+				leastDistance = thisDistance;
 					//[appDel setUiHidden:YES];
-				selectedVertex = i;
 				renderer->graph->selectedVertex = i;
 				
 					//Populate selected vertices
@@ -359,11 +155,7 @@
 		location.x = location.x * renderer->scale;
 		location.y = location.y * renderer->scale;
 		
-		if (selectedVertex >= 0 && selectedVertex < renderer->graph->vertexCount) 
-		{
-			renderer->graph->vertices[selectedVertex].x = location.x;
-			renderer->graph->vertices[selectedVertex].y = MIN(location.y,GAME_Y_MAX);
-		}
+		[renderer->graph moveSelectedVertexToLocation:location clippingRect:clippingRect];
 		
 		[renderer->graph checkGraphForIntersections];
 		
@@ -375,7 +167,7 @@
 {
 	if(playingGame)
 	{
-		if ([renderer->graph checkGraphForIntersections] == 0 && selectedVertex >= 0)
+		if ([renderer->graph checkGraphForIntersections] == 0 && renderer->graph->selectedVertex >= 0)
 		{
 			[self endGame];
 			
@@ -383,7 +175,6 @@
 		}
 		
 			//Clear selected vertex and connected vertices in graph
-		selectedVertex = -1;
 		renderer->graph->selectedVertex = -1;
 		for (int i = 0; i < renderer->graph->vertexCount; i++) 
 		{

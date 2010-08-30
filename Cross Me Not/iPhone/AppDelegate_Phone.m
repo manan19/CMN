@@ -9,11 +9,13 @@
 #import "AppDelegate_Phone.h"
 #import "EAGLView.h"
 
+#define TOP_AD_FRAME CGRectMake(0, 0, 320, 50)
+#define BOTTOM_AD_FRAME CGRectMake(0, 430, 320, 50)
+
 @implementation AppDelegate_Phone
 
 @synthesize bestTimes;
 @synthesize window;
-@synthesize placeHolderView;
 @synthesize placeHolderViewController;
 @synthesize glView;
 @synthesize timerLabel;
@@ -30,12 +32,6 @@
 	[window addSubview:placeHolderViewController.view];
 	[window makeKeyAndVisible];
 	[placeHolderViewController.view addSubview:menuView];
-	
-		// Initial Game Setup
-	currentLevel = 0;
-	[glView initGraph:0];
-	timeCounter = [[NSDate date] retain];
-	time = 0;
 	
 		// Initial setup for In-App Purchases
 	productIdentifierAdFree = @"com.mp.crossmenot.adfree";
@@ -55,12 +51,19 @@
 		// Setup Ads if NOT Ad Free
 	if (!adFree)
 	{
-		adView = [[[ADBannerView alloc] initWithFrame:CGRectMake(0, 430, 320, 50)] autorelease];
+		adView = [[[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME] autorelease];
 		[adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
 		[adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
 		[adView setDelegate:self];
 		[menuView addSubview:adView];
+		
+		glView->clippingRect = CGRectMake(0, 50 * glView->renderer->scale , glView->screenWidth, glView->screenHeight - 50 * glView->renderer->scale );
 	}
+	else 
+	{
+		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
+	}
+
 	
 		// Setup for high scores
 	[self loadBestTimes];
@@ -72,7 +75,12 @@
 		[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
 	}
 	
-	[NSTimer scheduledTimerWithTimeInterval:(1/60) target:self selector:@selector(update) userInfo:nil repeats:YES];
+		// Initial Game Setup
+	currentLevel = 0;
+	[glView newGraph:0];
+	timeCounter = [[NSDate date] retain];
+	time = 0;
+	[NSTimer scheduledTimerWithTimeInterval:(1/10) target:self selector:@selector(update) userInfo:nil repeats:YES];
 	
     return YES;
 }
@@ -210,7 +218,7 @@
 		}
 		
 			//Hack to keep FCKING AdMob Ads to change the placeHoler frame
-		else if(placeHolderViewController.view.frame.origin.y != 0)
+		if(placeHolderViewController.view.frame.origin.y != 0)
 			[placeHolderViewController.view setFrame:window.frame];
 	}
 }
@@ -270,6 +278,7 @@
 	{
 		[adView removeFromSuperview];
 		adView = NULL;
+		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
 			//Transaction for Ad Free version complete.
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		[defaults setObject:@"purchased" forKey:productIdentifierAdFree];
@@ -282,6 +291,12 @@
 	
 	if([glView superview] == placeHolderViewController.view)
 	{
+		if (adView) 
+		{
+			[adView setFrame:BOTTOM_AD_FRAME];
+			[menuView addSubview:adView];
+		}
+		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
@@ -289,6 +304,8 @@
 		[placeHolderViewController.view addSubview:menuView];
 		[UIView commitAnimations];
 	}
+	
+	glView->playingGame = FALSE;
 }
 
 - (IBAction)infoButton:(id)sender
@@ -323,11 +340,17 @@
 
 - (IBAction)startGame:(id)sender
 {
-	[glView initGraph:currentLevel];
+	[glView newGraph:currentLevel];
 	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
 	
 	if ([menuView superview] == placeHolderViewController.view)
 	{
+		if (adView) 
+		{
+			[adView setFrame:TOP_AD_FRAME];
+			[glView addSubview:adView];	
+		}
+		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];

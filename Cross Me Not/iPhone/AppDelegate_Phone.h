@@ -20,7 +20,6 @@
 {
 @public
 	IBOutlet UIWindow *window;
-	IBOutlet UIView *placeHolderView;
 	IBOutlet UIViewController *placeHolderViewController;
 	IBOutlet UIView *menuView;
 	IBOutlet UIView *infoView;
@@ -57,7 +56,6 @@
 @property (nonatomic, retain) IBOutlet EAGLView *glView;
 @property (nonatomic, retain) IBOutlet UIView *menuView;
 @property (nonatomic, retain) IBOutlet UIView *infoView;
-@property (nonatomic, retain) IBOutlet UIView *placeHolderView;
 @property (nonatomic, retain) IBOutlet UIViewController *placeHolderViewController;
 @property (nonatomic, retain) IBOutlet UILabel *timerLabel;
 @property (nonatomic, retain) IBOutlet UILabel *bestTimeLabel;

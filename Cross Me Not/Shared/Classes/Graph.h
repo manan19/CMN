@@ -18,4 +18,6 @@ typedef struct {
 }
 
 -(int)checkGraphForIntersections;
+-(void)moveSelectedVertexToLocation:(CGPoint)location clippingRect:(CGRect)clippingRect;
+- (id) initGraph:(int) lvl clippingRect:(CGRect)clippingRect;
 @end

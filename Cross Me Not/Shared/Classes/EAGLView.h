@@ -18,12 +18,12 @@
     ESRenderer* renderer;
 	BOOL playingGame;
 	int viewLevel;
-	int selectedVertex;
 	UIAlertView* aView;
-	uint GAME_X_MAX,GAME_Y_MAX;
+	uint screenWidth,screenHeight;
+	CGRect clippingRect;
 }
 
-- (void)initGraph:(int)lvl;
+- (void)newGraph:(int)lvl;
 - (void)drawView:(id)sender;
 - (void)endGame;
 - (float)distanceSquared:(CGPoint)p1  p2:(CGPoint)p2;
