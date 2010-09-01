@@ -51,7 +51,9 @@
 		// Setup Ads if NOT Ad Free
 	if (!adFree)
 	{
+		adViewVisible = FALSE;
 		adView = [[[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME] autorelease];
+		adView.frame = CGRectOffset(adView.frame, 0, 50);
 		[adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
 		[adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
 		[adView setDelegate:self];
@@ -64,7 +66,6 @@
 		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
 	}
 
-	
 		// Setup for high scores
 	[self loadBestTimes];
 	
@@ -115,10 +116,19 @@
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner 
 {
+	if (!adViewVisible) {
+		[self animate:banner up:!glView->playingGame];
+		adViewVisible = TRUE;
+	}
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
+	if (adViewVisible)
+	{
+		[self animate:banner up:glView->playingGame];
+		adViewVisible = FALSE;
+	}
 }
 
 /*
@@ -238,6 +248,22 @@
 	[[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
+- (void)animate:(ADBannerView*)banner up:(BOOL)up
+{
+	if (up)
+	{
+		[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+		banner.frame = CGRectOffset(banner.frame, 0, -50);
+		[UIView commitAnimations];
+	}
+	else 
+	{
+		[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+		banner.frame = CGRectOffset(banner.frame, 0, 50);
+		[UIView commitAnimations];
+	}
+}
+
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
 {
 	if (transaction.error.code != SKErrorPaymentCancelled)
@@ -348,6 +374,10 @@
 		if (adView) 
 		{
 			[adView setFrame:TOP_AD_FRAME];
+			if (!adViewVisible) 
+			{
+				adView.frame = CGRectOffset(adView.frame, 0, -50);
+			}
 			[glView addSubview:adView];	
 		}
 		

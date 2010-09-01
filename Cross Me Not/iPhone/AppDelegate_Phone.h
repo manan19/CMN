@@ -12,8 +12,6 @@
 
 #define MAX_LEVELS	10
 
-#define AD_REFRESH_PERIOD 60.0 // display fresh ads once per minute
-
 @class EAGLView;
 
 @interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, /*SKProductsRequestDelegate,*/ SKPaymentTransactionObserver> 
@@ -35,7 +33,7 @@
 	ADBannerView *adView;
 
 	int currentLevel;
-	BOOL appActive, adFree;
+	BOOL appActive, adFree, adViewVisible;
 	double frameRate,time;
 }
 
@@ -45,6 +43,7 @@
 - (void)loadBestTimes;
 	//- (void)requestProductData;
 - (void) buyAdFree:(id)sender;
+- (void)animate:(ADBannerView*)banner up:(BOOL)up;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;
