@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <iAd/ADBannerView.h>
 #import <StoreKit/StoreKit.h>
+#import "ScoreManager.h"
 
 #define MAX_LEVELS	10
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, /*SKProductsRequestDelegate,*/ SKPaymentTransactionObserver> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver> 
 {
 @public
 	IBOutlet UIWindow *window;
@@ -23,16 +24,19 @@
 	IBOutlet UIView *infoView;
 	IBOutlet UILabel *timerLabel;
 	IBOutlet UILabel *bestTimeLabel;
+	IBOutlet UIButton *removeAdsButton;
 	IBOutlet EAGLView *glView;
-	NSMutableDictionary *bestTimes;
 
 		//SKProductsRequest* productRequest;
 		//SKProduct* productAdFree;
 	NSString* productIdentifierAdFree;
+	SKProductsRequest* productsReq;
+	SKProduct* productAdFree;
 	NSDate *timeCounter;
 	ADBannerView *adView;
+	ScoreManager* scoreManager;
 
-	int currentLevel;
+	int currentLevel,gameEntryLevel;
 	BOOL appActive, adFree, adViewVisible;
 	double frameRate,time;
 }
@@ -40,17 +44,19 @@
 - (IBAction)menuButton:(id)sender;
 - (IBAction)startGame:(id)sender;
 - (IBAction)infoButton:(id)sender;
-- (void)loadBestTimes;
+- (IBAction)buyAdFree:(id)sender;
+-(void)setScoreLabelForLevel:(int)level;
+
 	//- (void)requestProductData;
-- (void) buyAdFree:(id)sender;
-- (void)animate:(ADBannerView*)banner up:(BOOL)up;
+
+- (void) endGame ;
+- (void) animate:(ADBannerView*)banner up:(BOOL)up;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;
 - (void) provideContent: (NSString *)productIdentifier;
 
 
-@property (nonatomic, retain) NSMutableDictionary *bestTimes;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet EAGLView *glView;
 @property (nonatomic, retain) IBOutlet UIView *menuView;

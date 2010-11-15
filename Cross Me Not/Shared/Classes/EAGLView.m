@@ -88,21 +88,7 @@
 	[aView show];
 	
 	AppDelegate_Phone* appDel = (AppDelegate_Phone*)([[UIApplication sharedApplication] delegate]);
-	NSString *currTime = appDel->timerLabel.text;
-
-	NSString *prevBest = [appDel->bestTimes objectForKey:[NSString stringWithFormat:@"%d",appDel->currentLevel+1]];
-	
-	if( [prevBest floatValue] > [currTime floatValue])
-	{
-			//Update new Best Time
-		[appDel->bestTimes setObject:currTime forKey:[NSString stringWithFormat:@"%d",appDel->currentLevel+1]];
-			//Update bestTimeLabel
-		[appDel->bestTimeLabel setText:[NSString stringWithFormat:@"%@ s",currTime]];
-			//Write to file
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-		NSString *appFile = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"BestTimes.plist"];
-		[appDel->bestTimes writeToFile:appFile atomically:YES];
-	}	
+	[appDel endGame];
 }
 
 -(float)distanceSquared:(CGPoint)p1  p2:(CGPoint)p2
@@ -122,6 +108,30 @@
 		location.x = location.x * renderer->scale;
 		location.y = location.y * renderer->scale;
 		
+		for (int i=0; i < renderer->graph->vertexCount; i++)
+		{
+			thisDistance = [self distanceSquared:renderer->graph->vertices[i] p2:location];
+			if (thisDistance < leastDistance)
+			{
+				leastDistance = thisDistance;
+					//[appDel setUiHidden:YES];
+				renderer->graph->selectedVertex = i;
+				
+					//Populate selected vertices
+				for( int j = 0 ; j < renderer->graph->edgeCount ; j++)
+				{
+					if(renderer->graph->edges[j].vert1 == i || renderer->graph->edges[j].vert2 == i)
+					{
+						renderer->graph->connectedVertices[renderer->graph->edges[j].vert1] = 1;
+						renderer->graph->connectedVertices[renderer->graph->edges[j].vert2] = 1;
+					}
+				}
+				return;
+			}
+		}
+		
+			// Try again with a larger radius
+		leastDistance = 1600;
 		for (int i=0; i < renderer->graph->vertexCount; i++)
 		{
 			thisDistance = [self distanceSquared:renderer->graph->vertices[i] p2:location];

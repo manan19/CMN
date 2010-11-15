@@ -14,7 +14,6 @@
 
 @implementation AppDelegate_Phone
 
-@synthesize bestTimes;
 @synthesize window;
 @synthesize placeHolderViewController;
 @synthesize glView;
@@ -35,6 +34,7 @@
 	
 		// Initial setup for In-App Purchases
 	productIdentifierAdFree = @"com.mp.crossmenot.adfree";
+	[removeAdsButton removeFromSuperview];
 	
 		// Check for In-App Purchases
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -60,14 +60,22 @@
 		[menuView addSubview:adView];
 		
 		glView->clippingRect = CGRectMake(0, 50 * glView->renderer->scale , glView->screenWidth, glView->screenHeight - 50 * glView->renderer->scale );
+		
+		productsReq = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:productIdentifierAdFree]];
+		[productsReq setDelegate:self];
+		[productsReq start];
 	}
 	else 
 	{
 		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
+		[removeAdsButton removeFromSuperview];
 	}
-
+	
 		// Setup for high scores
-	[self loadBestTimes];
+	scoreManager = [[ScoreManager alloc] init];
+	[scoreManager readBestTimes];
+	[self setScoreLabelForLevel:currentLevel+1];
+	
 	
 		// Setup for In-App Purchase if user can purchase
 	if ([SKPaymentQueue canMakePayments]) 
@@ -78,6 +86,7 @@
 	
 		// Initial Game Setup
 	currentLevel = 0;
+	gameEntryLevel = 0;
 	[glView newGraph:0];
 	timeCounter = [[NSDate date] retain];
 	time = 0;
@@ -131,7 +140,7 @@
 	}
 }
 
-/*
+
 #pragma mark -
 #pragma mark SKProductsRequestDelegate
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
@@ -145,16 +154,13 @@
 		if (![product.productIdentifier compare:productIdentifierAdFree]) 
 		{
 			productAdFree = [product retain];
+			[menuView addSubview:removeAdsButton];
 		}
-		
-		NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-		[numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-		[numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-		[numberFormatter setLocale:product.priceLocale];
-		NSLog(@"Product: %@, Title: %@, Description: %@, Price: %@", product.productIdentifier, product.localizedTitle, product.localizedDescription, formattedPrice);
 	}
+	
+	[productsReq release];
 }
-*/
+
 
 #pragma mark -
 #pragma mark SKPaymentTransactionObserver
@@ -184,12 +190,9 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
 	currentLevel = row;
+	gameEntryLevel = row;
 	
-	NSString* prevBest = [NSString stringWithFormat:@"%@ s",[bestTimes objectForKey:[NSString stringWithFormat:@"%d",currentLevel+1]]];
-	if ([prevBest floatValue] == 9990) 
-		[bestTimeLabel setText:NSLocalizedString(@"NA",@"No score yet")];
-	else
-		[bestTimeLabel setText:prevBest];
+	[self setScoreLabelForLevel:currentLevel+1];
 }
 
 
@@ -233,34 +236,51 @@
 	}
 }
 
+-(void)setScoreLabelForLevel:(int)level
+{
+	float prevBest = [scoreManager getBestScoreForLevel:level];
+	if ( prevBest == 9990 ) 
+		[bestTimeLabel setText:NSLocalizedString(@"NA",@"No score yet")];
+	else
+		[bestTimeLabel setText:[NSString stringWithFormat:@"%.2f s",prevBest]];
+}
+
 /*
  - (void) requestProductData
-{
-	productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: productIdentifierAdFree]];
-	[productRequest setDelegate:self];
-	[productRequest start];
-}
-*/
+ {
+ productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: productIdentifierAdFree]];
+ [productRequest setDelegate:self];
+ [productRequest start];
+ }
+ */
 
--(void) buyAdFree: (id)sender
+-(IBAction) buyAdFree: (id)sender
 {
 	SKPayment *payment = [SKMutablePayment paymentWithProductIdentifier:productIdentifierAdFree];
 	[[SKPaymentQueue defaultQueue] addPayment:payment];
+	
+	[removeAdsButton setEnabled:FALSE];
 }
 
 - (void)animate:(ADBannerView*)banner up:(BOOL)up
 {
 	if (up)
 	{
-		[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-		banner.frame = CGRectOffset(banner.frame, 0, -50);
-		[UIView commitAnimations];
+		if (banner.frame.origin.y == 480) 
+		{
+			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+			banner.frame = CGRectOffset(banner.frame, 0, -50);
+			[UIView commitAnimations];	
+		}
 	}
 	else 
 	{
-		[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-		banner.frame = CGRectOffset(banner.frame, 0, 50);
-		[UIView commitAnimations];
+		if (banner.frame.origin.y == -50) 
+		{
+			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+			banner.frame = CGRectOffset(banner.frame, 0, 50);
+			[UIView commitAnimations];
+		}
 	}
 }
 
@@ -268,9 +288,13 @@
 {
 	if (transaction.error.code != SKErrorPaymentCancelled)
 	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not connect to Store" message:@"Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		[alert release];
 			// Optionally, display an error here.
 	}
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+	[removeAdsButton setEnabled:TRUE];
 }
 
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
@@ -283,7 +307,7 @@
 	
 		//Finish the transaction
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-	
+	[removeAdsButton setEnabled:TRUE];
 }
 
 - (void) completeTransaction: (SKPaymentTransaction *)transaction
@@ -296,6 +320,7 @@
 	
 		//Finish the transaction
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+	[removeAdsButton setEnabled:TRUE];
 }
 
 - (void) provideContent: (NSString*)productIdentifier
@@ -308,6 +333,8 @@
 			//Transaction for Ad Free version complete.
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		[defaults setObject:@"purchased" forKey:productIdentifierAdFree];
+		
+		[removeAdsButton removeFromSuperview];
 	}
 }
 
@@ -332,6 +359,9 @@
 	}
 	
 	glView->playingGame = FALSE;
+	
+		//Update bestTimeLabel
+	[self setScoreLabelForLevel:gameEntryLevel+1];
 }
 
 - (IBAction)infoButton:(id)sender
@@ -398,21 +428,10 @@
 	glView->playingGame = TRUE;
 }
 
-- (void) loadBestTimes 
+- (void) endGame
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *appFile = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"BestTimes.plist"];
-	bestTimes = [[NSMutableDictionary alloc] initWithContentsOfFile:appFile];
-	if (!bestTimes) 
-	{
-		bestTimes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"9990", @"1", @"9990", @"2",@"9990", @"3",@"9990", @"4",@"9990", @"5",@"9990", @"6",@"9990", @"7",@"9990", @"8",@"9990", @"9",@"9990", @"10", nil];
-	}
-	
-	NSString* prevBest = [NSString stringWithFormat:@"%@ s",[bestTimes objectForKey:[NSString stringWithFormat:@"%d",currentLevel+1]]];
-	if ([prevBest floatValue] == 9990) 
-		[bestTimeLabel setText:NSLocalizedString(@"NA",@"No score yet")];
-	else
-		[bestTimeLabel setText:prevBest];
+	NSString *currTime = timerLabel.text;
+	[scoreManager newScore:[currTime floatValue] forLevel:currentLevel+1];
 }
 
 - (void)dealloc
@@ -425,7 +444,9 @@
 	[infoView release];
 	[adView release];
 	[timeCounter release];
-	[bestTimes release];
+	[productAdFree release];
+	[removeAdsButton release];
+	[productsReq release];
 	
 	[super dealloc];
 }
