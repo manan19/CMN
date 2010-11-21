@@ -152,22 +152,24 @@
 
 		// Start Admob
 	_adView = [AdMobView requestAdWithDelegate:self];
-	if(glView->playingGame)
-	{
-		[_adView setFrame:TOP_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, -48);
-	}
-	else
-	{
-		[_adView setFrame:BOTTOM_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, 48);
-	}
 }
 
 #pragma mark -
 #pragma mark AdMobDelegate
 - (void)didReceiveAd:(AdMobView *)adView {
-	[menuView addSubview:_adView];
+	if (glView->playingGame)
+	{
+		[_adView setFrame:TOP_AD_FRAME];
+		_adView.frame = CGRectOffset(_adView.frame, 0, -48);
+		[glView addSubview:_adView];
+	}
+	else
+	{
+		[_adView setFrame:BOTTOM_AD_FRAME];
+		_adView.frame = CGRectOffset(_adView.frame, 0, 48);
+		[menuView addSubview:_adView];
+	}
+
 	if (!adViewVisible) {
 		[self animate:_adView up:!glView->playingGame];
 		adViewVisible = TRUE;
