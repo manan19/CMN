@@ -7,6 +7,7 @@
 	//
 
 #import "ScoreManager.h"
+#import "AppDelegate_Phone.h"
 
 
 @implementation ScoreManager
@@ -46,6 +47,40 @@
     [nc addObserver:self selector:@selector(authenticationChanged) name:GKPlayerAuthenticationDidChangeNotificationName object:nil];
 }
 
+- (void) updateScoresFromGameCenter:(int)level
+{
+	temp = level;
+	GKLeaderboard *lbquery;
+	
+	lbquery = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObjects:[GKLocalPlayer localPlayer].playerID,nil]];
+	[lbquery setCategory:[NSString stringWithFormat:@"l%d",level]];
+	
+	[lbquery loadScoresWithCompletionHandler:
+	 ^(NSArray *scores, NSError *error) 
+	{
+		if (error != nil) 
+		{
+			[self updateScoresFromGameCenter:temp];
+		}
+		else if (scores != nil)
+		{
+			if([scores count])
+			{
+				float score = [((GKScore*)[scores objectAtIndex:0]) value];
+				[self newScore:score/100 forLevel:temp sendToGC:FALSE];
+			}
+			
+			if (temp < MAX_LEVELS)
+			{
+				[self updateScoresFromGameCenter:++temp];
+			}
+		}
+	}
+	];
+	
+	[lbquery release];
+}
+
 - (void) authenticationChanged
 {
 	[self readBestTimes];
@@ -55,22 +90,7 @@
 			// Insert code here to handle a successful authentication.
 		
 			///////////////////////// TODO read in scores properly
-		GKLeaderboard *lbquery = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObjects:[GKLocalPlayer localPlayer].playerID,nil]];
-		if (lbquery != nil)
-		{
-			[lbquery loadScoresWithCompletionHandler: ^(NSArray *scores, NSError *error) {
-				if (error != nil)
-				{
-						// handle the error.
-				}
-				
-				if (scores != nil)
-				{
-					NSLog(@"%@",[scores objectAtIndex:0]);
-						// process the score information.
-				}
-			}];
-		}
+		[self updateScoresFromGameCenter:1];		
 	}
 	else
 	{
@@ -147,7 +167,7 @@
 }
 
 
-- (void) newScore:(float)score forLevel:(int)level
+- (void) newScore:(float)score forLevel:(int)level sendToGC:(BOOL)report
 {
 	float prevBest = [self getBestScoreForLevel:level];
 	
@@ -158,9 +178,21 @@
 			//Write to file
 		[self writeBestTimes];
 			//Report to Game Center
-		int64_t newBest = score * 100;
-		[self reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
+		
+		if (report) {
+			int64_t newBest = score * 100;
+			[self reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
+		}
 	}
+	else
+	{
+		if (!report) 
+		{
+			int64_t newBest = prevBest * 100;
+			[self reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
+		}
+	}
+
 	
 }
 

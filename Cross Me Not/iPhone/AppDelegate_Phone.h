@@ -10,12 +10,14 @@
 #import <iAd/ADBannerView.h>
 #import <StoreKit/StoreKit.h>
 #import "ScoreManager.h"
+#import "AdMobDelegateProtocol.h"
+#import "AdMobView.h"
 
 #define MAX_LEVELS	10
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, ADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver, AdMobDelegate> 
 {
 @public
 	IBOutlet UIWindow *window;
@@ -33,7 +35,7 @@
 	SKProductsRequest* productsReq;
 	SKProduct* productAdFree;
 	NSDate *timeCounter;
-	ADBannerView *adView;
+	UIView *_adView;
 	ScoreManager* scoreManager;
 
 	int currentLevel,gameEntryLevel;
@@ -47,10 +49,9 @@
 - (IBAction)buyAdFree:(id)sender;
 -(void)setScoreLabelForLevel:(int)level;
 
-	//- (void)requestProductData;
-
+- (void) requestProductData;
 - (void) endGame ;
-- (void) animate:(ADBannerView*)banner up:(BOOL)up;
+- (void) animate:(UIView*)adView up:(BOOL)up;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;

@@ -52,18 +52,26 @@
 	if (!adFree)
 	{
 		adViewVisible = FALSE;
-		adView = [[[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME] autorelease];
-		adView.frame = CGRectOffset(adView.frame, 0, 50);
-		[adView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
-		[adView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
-		[adView setDelegate:self];
-		[menuView addSubview:adView];
+		ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
+		iadView.frame = CGRectOffset(iadView.frame, 0, 50);
+		if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
+		{
+			[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
+			[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
+		}
+		else 
+		{
+			[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
+			[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
+		}
+
+		[iadView setDelegate:self];
+		_adView = iadView;
+		[menuView addSubview:_adView];
 		
 		glView->clippingRect = CGRectMake(0, 50 * glView->renderer->scale , glView->screenWidth, glView->screenHeight - 50 * glView->renderer->scale );
 		
-		productsReq = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:productIdentifierAdFree]];
-		[productsReq setDelegate:self];
-		[productsReq start];
+		[self requestProductData];
 	}
 	else 
 	{
@@ -73,9 +81,7 @@
 	
 		// Setup for high scores
 	scoreManager = [[ScoreManager alloc] init];
-	[scoreManager readBestTimes];
-	[self setScoreLabelForLevel:currentLevel+1];
-	
+	[scoreManager readBestTimes];	
 	
 		// Setup for In-App Purchase if user can purchase
 	if ([SKPaymentQueue canMakePayments]) 
@@ -133,13 +139,58 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
+		//iAds failed
+	NSLog(@"%@",[error localizedDescription]);
 	if (adViewVisible)
 	{
 		[self animate:banner up:glView->playingGame];
 		adViewVisible = FALSE;
+	}	
+		// clean iAds
+	[banner removeFromSuperview];
+	[banner release];
+
+		// Start Admob
+	_adView = [AdMobView requestAdWithDelegate:self];
+	if(glView->playingGame)
+	{
+		[_adView setFrame:TOP_AD_FRAME];
+		_adView.frame = CGRectOffset(_adView.frame, 0, -48);
+	}
+	else
+	{
+		[_adView setFrame:BOTTOM_AD_FRAME];
+		_adView.frame = CGRectOffset(_adView.frame, 0, 48);
 	}
 }
 
+#pragma mark -
+#pragma mark AdMobDelegate
+- (void)didReceiveAd:(AdMobView *)adView {
+	[menuView addSubview:_adView];
+	if (!adViewVisible) {
+		[self animate:_adView up:!glView->playingGame];
+		adViewVisible = TRUE;
+	}
+}
+
+	// Sent when an ad request failed to load an ad
+- (void)didFailToReceiveAd:(AdMobView *)adView {
+	NSLog(@"AdMob: Did fail to receive ad");
+	if(adViewVisible)
+	{
+		[self animate:adView up:glView->playingGame];
+		adViewVisible = FALSE;
+	}
+}
+
+- (NSString *)publisherIdForAd:(AdMobView *)adView {
+	return @"a14b84284a8b3d3";
+}
+
+- (UIViewController *)currentViewControllerForAd:(AdMobView *)adView {
+	return placeHolderViewController;
+}
 
 #pragma mark -
 #pragma mark SKProductsRequestDelegate
@@ -191,13 +242,7 @@
 {
 	currentLevel = row;
 	gameEntryLevel = row;
-	
-	[self setScoreLabelForLevel:currentLevel+1];
 }
-
-
-#pragma mark -
-#pragma mark UIPickerViewDataSource
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
@@ -230,7 +275,9 @@
 			[timerLabel setText:[NSString stringWithFormat:@"%.2f",time]];
 		}
 		
-			//Hack to keep FCKING AdMob Ads to change the placeHoler frame
+		[self setScoreLabelForLevel:currentLevel+1];
+		
+			//Hack to keep FCKING AdMob Ads to change the placeHolder frame
 		if(placeHolderViewController.view.frame.origin.y != 0)
 			[placeHolderViewController.view setFrame:window.frame];
 	}
@@ -245,14 +292,13 @@
 		[bestTimeLabel setText:[NSString stringWithFormat:@"%.2f s",prevBest]];
 }
 
-/*
- - (void) requestProductData
- {
- productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: productIdentifierAdFree]];
- [productRequest setDelegate:self];
- [productRequest start];
- }
- */
+
+- (void) requestProductData
+{
+	productsReq = [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: productIdentifierAdFree]];
+	[productsReq setDelegate:self];
+	[productsReq start];
+}
 
 -(IBAction) buyAdFree: (id)sender
 {
@@ -262,23 +308,23 @@
 	[removeAdsButton setEnabled:FALSE];
 }
 
-- (void)animate:(ADBannerView*)banner up:(BOOL)up
+- (void)animate:(UIView*)adView up:(BOOL)up
 {
 	if (up)
 	{
-		if (banner.frame.origin.y == 480) 
+			//if (adView.frame.origin.y == 480) 
 		{
 			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			banner.frame = CGRectOffset(banner.frame, 0, -50);
+			adView.frame = CGRectOffset(adView.frame, 0, -50);
 			[UIView commitAnimations];	
 		}
 	}
 	else 
 	{
-		if (banner.frame.origin.y == -50) 
+			//if (adView.frame.origin.y == -50) 
 		{
 			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			banner.frame = CGRectOffset(banner.frame, 0, 50);
+			adView.frame = CGRectOffset(adView.frame, 0, 50);
 			[UIView commitAnimations];
 		}
 	}
@@ -327,8 +373,9 @@
 {
 	if (![productIdentifier compare:productIdentifierAdFree]) 
 	{
-		[adView removeFromSuperview];
-		adView = NULL;
+		[_adView removeFromSuperview];
+		_adView = NULL;
+		
 		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
 			//Transaction for Ad Free version complete.
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -344,10 +391,10 @@
 	
 	if([glView superview] == placeHolderViewController.view)
 	{
-		if (adView) 
+		if (_adView) 
 		{
-			[adView setFrame:BOTTOM_AD_FRAME];
-			[menuView addSubview:adView];
+			[_adView setFrame:BOTTOM_AD_FRAME];
+			[menuView addSubview:_adView];
 		}
 		
 		[UIView beginAnimations:nil context:NULL];
@@ -360,8 +407,7 @@
 	
 	glView->playingGame = FALSE;
 	
-		//Update bestTimeLabel
-	[self setScoreLabelForLevel:gameEntryLevel+1];
+	currentLevel = gameEntryLevel;
 }
 
 - (IBAction)infoButton:(id)sender
@@ -373,9 +419,9 @@
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
 		[infoView removeFromSuperview];
 		[placeHolderViewController.view addSubview:menuView];
-		if (adView) 
+		if (_adView) 
 		{
-			[menuView addSubview:adView];	
+			[menuView addSubview:_adView];	
 		}
 		[UIView commitAnimations];
 	}
@@ -386,9 +432,9 @@
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
 		[menuView removeFromSuperview];
 		[placeHolderViewController.view addSubview:infoView];
-		if (adView) 
+		if (_adView) 
 		{
-			[infoView addSubview:adView];
+			[infoView addSubview:_adView];
 		}
 		[UIView commitAnimations];
 	}
@@ -401,14 +447,14 @@
 	
 	if ([menuView superview] == placeHolderViewController.view)
 	{
-		if (adView) 
+		if (_adView) 
 		{
-			[adView setFrame:TOP_AD_FRAME];
+			[_adView setFrame:TOP_AD_FRAME];
 			if (!adViewVisible) 
 			{
-				adView.frame = CGRectOffset(adView.frame, 0, -50);
+				_adView.frame = CGRectOffset(_adView.frame, 0, -50);
 			}
-			[glView addSubview:adView];	
+			[glView addSubview:_adView];	
 		}
 		
 		[UIView beginAnimations:nil context:NULL];
@@ -431,7 +477,7 @@
 - (void) endGame
 {
 	NSString *currTime = timerLabel.text;
-	[scoreManager newScore:[currTime floatValue] forLevel:currentLevel+1];
+	[scoreManager newScore:[currTime floatValue] forLevel:currentLevel+1 sendToGC:TRUE];
 }
 
 - (void)dealloc
@@ -442,7 +488,7 @@
 	[glView release];
 	[menuView release];
 	[infoView release];
-	[adView release];
+	[_adView release];
 	[timeCounter release];
 	[productAdFree release];
 	[removeAdsButton release];

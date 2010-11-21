@@ -12,12 +12,13 @@
 
 @interface ScoreManager : NSObject {
 	NSMutableDictionary *bestTimes;
+	int temp;
 }
 
 - (void) readBestTimes;
 - (void) writeBestTimes;
 - (void) setBestScore:(float)score forLevel:(int)level;
-- (void) newScore:(float)score forLevel:(int)level;
+- (void) newScore:(float)score forLevel:(int)level sendToGC:(BOOL)report;
 - (float) getBestScoreForLevel:(int)level;
 - (void) reportHighScore:(int64_t) score forCategory: (NSString*) category;
 - (void) authenticateLocalPlayer;
