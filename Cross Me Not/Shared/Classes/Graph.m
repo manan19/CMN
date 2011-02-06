@@ -22,24 +22,24 @@
 
 -(Boolean)lineIntersect:(CGPoint)a1 Point2:(CGPoint)a2 Point3:(CGPoint)b1 Point4:(CGPoint)b2
 {
-	//----------------------------------------------------------------------
+		//----------------------------------------------------------------------
     
     float	a1yb1y, a1xb1x, a2xa1x, a2ya1y;
     float	crossa, crossb;
 	
-    //----------------------------------------------------------------------
+		//----------------------------------------------------------------------
 	
     a1yb1y = a1.y-b1.y;
     a1xb1x = a1.x-b1.x;
     a2xa1x = a2.x-a1.x;
     a2ya1y = a2.y-a1.y;
 	
-    //----------------------------------------------------------------------
+		//----------------------------------------------------------------------
 	
     crossa = a1yb1y * ( b2.x - b1.x ) - a1xb1x * ( b2.y - b1.y );
     crossb = a2xa1x * ( b2.y - b1.y ) - a2ya1y * ( b2.x - b1.x );
 	
-    //----------------------------------------------------------------------
+		//----------------------------------------------------------------------
     
     if ( crossb == 0 )
     {
@@ -59,7 +59,7 @@
 		}
     }
     
-    //----------------------------------------------------------------------
+		//----------------------------------------------------------------------
     
     return TRUE;
 }
@@ -311,130 +311,231 @@
 	
 	if(lvl >= 10)
 	{
-//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+			//vertices[21].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+			//vertices[21].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
 		vertexCount = 21;
 		
-//		edges[33].vert1 = 17;
-//		edges[33].vert2 = 20;
+		edges[36].vert1 = 1;
+		edges[36].vert2 = 12;
+		edges[37].vert1 = 16;
+		edges[37].vert2 = 20;
+		edges[38].vert1 = 15;
+		edges[38].vert2 = 16;
 		
-		edgeCount = 36;
+		edgeCount = 39;
 	}
 	
 	if(lvl >= 11)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+			//vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+			//vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
 		vertexCount = 21;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[39].vert1 = 12;
+		edges[39].vert2 = 19;
+		edges[40].vert1 = 11;
+		edges[40].vert2 = 19;
+		edges[41].vert1 = 2;
+		edges[41].vert2 = 17;
 		
-		edgeCount = 36;
+		edgeCount = 42;
 	}
 	if(lvl >= 12)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[21].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[21].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 22;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[42].vert1 = 7;
+		edges[42].vert2 = 21;
+		edges[43].vert1 = 6;
+		edges[43].vert2 = 21;
+		edges[44].vert1 = 8;
+		edges[44].vert2 = 21;
+		edges[45].vert1 = 10;
+		edges[45].vert2 = 21;
 		
-		edgeCount = 36;
+		edgeCount = 46;
 	}
 	if(lvl >= 13)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[22].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[22].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 23;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
-		
-		edgeCount = 36;
+		edges[46].vert1 = 13;
+		edges[46].vert2 = 22;
+		edges[47].vert1 = 21;
+		edges[47].vert2 = 22;
+
+		edgeCount = 48;
 	}
 	
 	if(lvl >= 14)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[23].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[23].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 24;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[48].vert1 = 20;
+		edges[48].vert2 = 23;
+		edges[49].vert1 = 18;
+		edges[49].vert2 = 23;
+		edges[50].vert1 = 19;
+		edges[50].vert2 = 23;
 		
-		edgeCount = 36;
+		edgeCount = 51;
 	}
+	
+		///////////// PAID LEVELS
 	
 	if(lvl >= 15)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[24].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[24].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 25;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[51].vert1 = 24;
+		edges[51].vert2 = 15;
+		edges[52].vert1 = 16;
+		edges[52].vert2 = 24;
+		edges[53].vert1 = 3;
+		edges[53].vert2 = 6;
 		
-		edgeCount = 36;
+		edgeCount = 54;
 	}
 	
 	if(lvl >= 16)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[25].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[25].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 26;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[54].vert1 = 23;
+		edges[54].vert2 = 25;
+		edges[55].vert1 = 14;
+		edges[55].vert2 = 25;
+		edges[56].vert1 = 1;
+		edges[56].vert2 = 11;
 		
-		edgeCount = 36;
+		edgeCount = 57;
 	}
 	
 	if(lvl >= 17)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[26].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[26].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 27;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[57].vert1 = 26;
+		edges[57].vert2 = 14;
+		edges[58].vert1 = 13;
+		edges[58].vert2 = 26;
+		edges[59].vert1 = 26;
+		edges[59].vert2 = 22;
 		
-		edgeCount = 36;
+		edgeCount = 60;
 	}
 	
 	if(lvl >= 18)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[27].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[27].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 28;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[60].vert1 = 20;
+		edges[60].vert2 = 27;
+		edges[61].vert1 = 24;
+		edges[61].vert2 = 27;
 		
-		edgeCount = 36;
+		edgeCount = 62;
 	}
 	
 	if(lvl >= 19)
 	{
-			//		vertices[20].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
-			//		vertices[20].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		vertices[28].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[28].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
 		
-		vertexCount = 21;
+		vertexCount = 29;
 		
-			//		edges[33].vert1 = 17;
-			//		edges[33].vert2 = 20;
+		edges[62].vert1 = 14;
+		edges[62].vert2 = 28;
+		edges[63].vert1 = 25;
+		edges[63].vert2 = 28;
+		edges[64].vert1 = 26;
+		edges[64].vert2 = 28;
 		
-		edgeCount = 36;
+		edgeCount = 65;
+	}
+	
+	if(lvl >= 20)
+	{
+		vertices[29].x = arc4random()%(uint)(clippingRect.size.width) + (uint)(clippingRect.origin.x);
+		vertices[29].y = arc4random()%(uint)(clippingRect.size.height) + (uint)(clippingRect.origin.y);
+		
+		vertexCount = 30;
+		
+		edges[65].vert1 = 29;
+		edges[65].vert2 = 27;
+		edges[66].vert1 = 29;
+		edges[66].vert2 = 24;
+		edges[67].vert1 = 29;
+		edges[67].vert2 = 15;
+		
+		edgeCount = 68;
+	}
+	
+	if(lvl >= 21)
+	{
+		edges[68].vert1 = 4;
+		edges[68].vert2 = 15;
+		edges[69].vert1 = 2;
+		edges[69].vert2 = 3;
+		edges[70].vert1 = 19;
+		edges[70].vert2 = 25;
+		
+		edgeCount = 71;
+	}
+	
+	if(lvl >= 22)
+	{
+		edges[71].vert1 = 2;
+		edges[71].vert2 = 15;
+		edges[72].vert1 = 5;
+		edges[72].vert2 = 9;
+		
+		edgeCount = 73;
+	}
+	
+	if(lvl >= 23)
+	{
+		edges[73].vert1 = 16;
+		edges[73].vert2 = 27;
+		edges[74].vert1 = 21;
+		edges[74].vert2 = 26;
+		
+		edgeCount = 75;
+	}
+	
+	if(lvl >= 24)
+	{
+		edges[75].vert1 = 25;
+		edges[75].vert2 = 26;
+		edges[76].vert1 = 25;
+		edges[76].vert2 = 20;
+		edges[77].vert1 = 20;
+		edges[77].vert2 = 29;
+		
+		edgeCount = 78;
 	}
 	
 	for (int i = 0 ; i < edgeCount ; i++) 

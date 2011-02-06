@@ -15,16 +15,18 @@
 	int temp;
 }
 
-- (void) readBestTimes;
-- (void) writeBestTimes;
-- (void) setBestScore:(float)score forLevel:(int)level;
 - (void) newScore:(float)score forLevel:(int)level sendToGC:(BOOL)report;
 - (float) getBestScoreForLevel:(int)level;
-- (void) reportHighScore:(int64_t) score forCategory: (NSString*) category;
-- (void) authenticateLocalPlayer;
-- (void) registerForAuthenticationNotification;
-- (void) authenticationChanged;
-- (BOOL) isGameCenterAvailable;
-- (NSString*)getFilePath;
+- (void) readBestTimes;
+
+
+- (void) _writeBestTimes;
+- (void) _setBestScore:(float)score forLevel:(int)level;
+- (void) _reportHighScore:(int64_t) score forCategory: (NSString*) category;
+- (void) _authenticateLocalPlayer;
+- (void) _registerForAuthenticationNotification;
+- (void) _authenticationChanged;
+- (BOOL) _isGameCenterAvailable;
+- (NSString*)_getFilePath;
 
 @end

@@ -9,8 +9,7 @@
 #import "AppDelegate_Phone.h"
 #import "EAGLView.h"
 
-#define TOP_AD_FRAME CGRectMake(0, 0, 320, 50)
-#define BOTTOM_AD_FRAME CGRectMake(0, 430, 320, 50)
+
 
 @implementation AppDelegate_Phone
 
@@ -39,7 +38,7 @@
 		// Check for In-App Purchases
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *results = [defaults stringForKey:productIdentifierAdFree];
-	if (results) 
+	if (!results) 
 	{
 		adFree = TRUE;
 	}
@@ -49,25 +48,11 @@
 	}
 	
 		// Setup Ads if NOT Ad Free
-	if (!adFree)
+	if (adFree)
 	{
-		adViewVisible = FALSE;
-		ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
-		iadView.frame = CGRectOffset(iadView.frame, 0, 50);
-		if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
-		{
-			[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
-			[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
-		}
-		else 
-		{
-			[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
-			[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
-		}
-
-		[iadView setDelegate:self];
-		_adView = iadView;
-		[menuView addSubview:_adView];
+		adManager = [[AdManager alloc] init];
+		[adManager setParentViewController:placeHolderViewController];
+		[adManager setParentView:menuView andPosition:FALSE];
 		
 		glView->clippingRect = CGRectMake(0, 50 * glView->renderer->scale , glView->screenWidth, glView->screenHeight - 50 * glView->renderer->scale );
 		
@@ -76,8 +61,8 @@
 	else 
 	{
 		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
-		[removeAdsButton removeFromSuperview];
 	}
+	
 	
 		// Setup for high scores
 	scoreManager = [[ScoreManager alloc] init];
@@ -96,7 +81,7 @@
 	[glView newGraph:0];
 	timeCounter = [[NSDate date] retain];
 	time = 0;
-	[NSTimer scheduledTimerWithTimeInterval:(1/10) target:self selector:@selector(update) userInfo:nil repeats:YES];
+	[NSTimer scheduledTimerWithTimeInterval:(1/30) target:self selector:@selector(update) userInfo:nil repeats:YES];
 	
     return YES;
 }
@@ -123,75 +108,6 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-}
-
-
-#pragma mark -
-#pragma mark ADBannerViewDelegate methods
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner 
-{
-	if (!adViewVisible) {
-		[self animate:banner up:!glView->playingGame];
-		adViewVisible = TRUE;
-	}
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-		//iAds failed
-	NSLog(@"%@",[error localizedDescription]);
-	if (adViewVisible)
-	{
-		[self animate:banner up:glView->playingGame];
-		adViewVisible = FALSE;
-	}	
-		// clean iAds
-	[banner removeFromSuperview];
-	[banner release];
-
-		// Start Admob
-	_adView = [AdMobView requestAdWithDelegate:self];
-}
-
-#pragma mark -
-#pragma mark AdMobDelegate
-- (void)didReceiveAd:(AdMobView *)adView {
-	if (glView->playingGame)
-	{
-		[_adView setFrame:TOP_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, -48);
-		[glView addSubview:_adView];
-	}
-	else
-	{
-		[_adView setFrame:BOTTOM_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, 48);
-		[menuView addSubview:_adView];
-	}
-
-	if (!adViewVisible) {
-		[self animate:_adView up:!glView->playingGame];
-		adViewVisible = TRUE;
-	}
-}
-
-	// Sent when an ad request failed to load an ad
-- (void)didFailToReceiveAd:(AdMobView *)adView {
-	NSLog(@"AdMob: Did fail to receive ad");
-	if(adViewVisible)
-	{
-		[self animate:adView up:glView->playingGame];
-		adViewVisible = FALSE;
-	}
-}
-
-- (NSString *)publisherIdForAd:(AdMobView *)adView {
-	return @"a14b84284a8b3d3";
-}
-
-- (UIViewController *)currentViewControllerForAd:(AdMobView *)adView {
-	return placeHolderViewController;
 }
 
 #pragma mark -
@@ -310,28 +226,6 @@
 	[removeAdsButton setEnabled:FALSE];
 }
 
-- (void)animate:(UIView*)adView up:(BOOL)up
-{
-	if (up)
-	{
-			//if (adView.frame.origin.y == 480) 
-		{
-			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			adView.frame = CGRectOffset(adView.frame, 0, -50);
-			[UIView commitAnimations];	
-		}
-	}
-	else 
-	{
-			//if (adView.frame.origin.y == -50) 
-		{
-			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			adView.frame = CGRectOffset(adView.frame, 0, 50);
-			[UIView commitAnimations];
-		}
-	}
-}
-
 - (void) failedTransaction: (SKPaymentTransaction *)transaction
 {
 	if (transaction.error.code != SKErrorPaymentCancelled)
@@ -375,8 +269,7 @@
 {
 	if (![productIdentifier compare:productIdentifierAdFree]) 
 	{
-		[_adView removeFromSuperview];
-		_adView = NULL;
+		[adManager shutdown];
 		
 		glView->clippingRect = CGRectMake(0, 0, glView->screenWidth, glView->screenHeight);
 			//Transaction for Ad Free version complete.
@@ -393,11 +286,7 @@
 	
 	if([glView superview] == placeHolderViewController.view)
 	{
-		if (_adView) 
-		{
-			[_adView setFrame:BOTTOM_AD_FRAME];
-			[menuView addSubview:_adView];
-		}
+		[adManager setParentView:menuView andPosition:FALSE];
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
@@ -421,10 +310,7 @@
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
 		[infoView removeFromSuperview];
 		[placeHolderViewController.view addSubview:menuView];
-		if (_adView) 
-		{
-			[menuView addSubview:_adView];	
-		}
+		[adManager setParentView:menuView andPosition:FALSE];
 		[UIView commitAnimations];
 	}
 	else 
@@ -434,10 +320,7 @@
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
 		[menuView removeFromSuperview];
 		[placeHolderViewController.view addSubview:infoView];
-		if (_adView) 
-		{
-			[infoView addSubview:_adView];
-		}
+		[adManager setParentView:infoView andPosition:FALSE];
 		[UIView commitAnimations];
 	}
 }
@@ -449,15 +332,7 @@
 	
 	if ([menuView superview] == placeHolderViewController.view)
 	{
-		if (_adView) 
-		{
-			[_adView setFrame:TOP_AD_FRAME];
-			if (!adViewVisible) 
-			{
-				_adView.frame = CGRectOffset(_adView.frame, 0, -50);
-			}
-			[glView addSubview:_adView];	
-		}
+		[adManager setParentView:glView andPosition:TRUE];
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
@@ -490,7 +365,6 @@
 	[glView release];
 	[menuView release];
 	[infoView release];
-	[_adView release];
 	[timeCounter release];
 	[productAdFree release];
 	[removeAdsButton release];

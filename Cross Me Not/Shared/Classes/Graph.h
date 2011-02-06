@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#define MAX_VERTEX_COUNT 25
+#define MAX_VERTEX_COUNT 30
 #define MAX_EDGE_COUNT 100
 typedef struct {
 	int vert1;

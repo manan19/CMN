@@ -17,17 +17,17 @@
 	self = [super init];
 	if (self != nil) {
 		
-		if([self isGameCenterAvailable])
+		if([self _isGameCenterAvailable])
 		{
-			[self registerForAuthenticationNotification];
-			[self authenticateLocalPlayer];
+			[self _registerForAuthenticationNotification];
+			[self _authenticateLocalPlayer];
 		}
 	}
 	return self;
 }
 
 
-- (void) authenticateLocalPlayer
+- (void) _authenticateLocalPlayer
 {
     [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError *error) {
 		if (error == nil)
@@ -41,10 +41,10 @@
 	}];
 }
 
-- (void) registerForAuthenticationNotification
+- (void) _registerForAuthenticationNotification
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(authenticationChanged) name:GKPlayerAuthenticationDidChangeNotificationName object:nil];
+    [nc addObserver:self selector:@selector(_authenticationChanged) name:GKPlayerAuthenticationDidChangeNotificationName object:nil];
 }
 
 - (void) updateScoresFromGameCenter:(int)level
@@ -81,7 +81,7 @@
 	[lbquery release];
 }
 
-- (void) authenticationChanged
+- (void) _authenticationChanged
 {
 	[self readBestTimes];
 	
@@ -98,9 +98,9 @@
 	}
 }
 
-- (void) reportHighScore:(int64_t) score forCategory: (NSString*) category
+- (void) _reportHighScore:(int64_t) score forCategory: (NSString*) category
 {
-	if( [self isGameCenterAvailable] && [GKLocalPlayer localPlayer].isAuthenticated )
+	if( [self _isGameCenterAvailable] && [GKLocalPlayer localPlayer].isAuthenticated )
 	{
 		GKScore *scoreReporter = [[[GKScore alloc] initWithCategory:category] autorelease];
 		scoreReporter.value = score;
@@ -117,7 +117,7 @@
 
 - (void) readBestTimes 
 {
-	NSString *appFile = [self getFilePath];
+	NSString *appFile = [self _getFilePath];
 	bestTimes = [[NSMutableDictionary alloc] initWithContentsOfFile:appFile];
 	
 	if (!bestTimes) 
@@ -126,18 +126,18 @@
 	}
 }
 
-- (void) writeBestTimes
+- (void) _writeBestTimes
 {
-	NSString *appFile = [self getFilePath];
+	NSString *appFile = [self _getFilePath];
 	[bestTimes writeToFile:appFile atomically:YES];
 }
 
-- (void) setBestScore:(float)score forLevel:(int)level
+- (void) _setBestScore:(float)score forLevel:(int)level
 {
 	[bestTimes setObject:[NSString stringWithFormat:@"%f",score] forKey:[NSString stringWithFormat:@"%d",level]];
 }
 
--(BOOL)isGameCenterAvailable
+-(BOOL)_isGameCenterAvailable
 {
 		// Check for presence of GKLocalPlayer API.
     Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
@@ -150,11 +150,11 @@
     return (gcClass && osVersionSupported);
 }
 
-- (NSString*)getFilePath
+- (NSString*)_getFilePath
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *appFile;
-	if([self isGameCenterAvailable] && [GKLocalPlayer localPlayer].isAuthenticated)
+	if([self _isGameCenterAvailable] && [GKLocalPlayer localPlayer].isAuthenticated)
 	{
 		appFile = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",[GKLocalPlayer localPlayer].alias]];
 	}
@@ -174,14 +174,14 @@
 	if( prevBest > score)
 	{
 			//Update new Best Time
-		[self setBestScore:score forLevel:level];
+		[self _setBestScore:score forLevel:level];
 			//Write to file
-		[self writeBestTimes];
+		[self _writeBestTimes];
 			//Report to Game Center
 		
 		if (report) {
 			int64_t newBest = score * 100;
-			[self reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
+			[self _reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
 		}
 	}
 	else
@@ -189,7 +189,7 @@
 		if (!report) 
 		{
 			int64_t newBest = prevBest * 100;
-			[self reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
+			[self _reportHighScore:newBest forCategory:[NSString stringWithFormat:@"l%d",level]];
 		}
 	}
 

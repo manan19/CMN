@@ -65,7 +65,8 @@
 
 - (void) newGraph:(int) lvl
 {
-	[renderer->graph release];
+	if (renderer->graph)
+		[renderer->graph release];
 	renderer->graph = [[Graph alloc] initGraph:lvl clippingRect:clippingRect];
 	
 	[self layoutSubviews];
