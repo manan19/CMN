@@ -6,6 +6,7 @@
 //  Copyright 2011 ngmoco:). All rights reserved.
 //
 
+#import "FlurryAPI.h"
 #import <Foundation/Foundation.h>
 #import <iAd/ADBannerView.h>
 #import "AdMobDelegateProtocol.h"

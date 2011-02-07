@@ -11,6 +11,7 @@
 #import <StoreKit/StoreKit.h>
 #import "ScoreManager.h"
 #import "AdManager.h"
+#import "FlurryAPI.h"
 
 #define MAX_LEVELS	25
 

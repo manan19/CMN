@@ -9,7 +9,9 @@
 #import "AppDelegate_Phone.h"
 #import "EAGLView.h"
 
-
+void uncaughtExceptionHandler(NSException *exception) {
+    [FlurryAPI logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
 
 @implementation AppDelegate_Phone
 
@@ -26,6 +28,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+		// Analytics
+	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+	[FlurryAPI setAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+	[FlurryAPI startSession:@"HZITZ7GERIG6LHLM5U7Q"];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									  @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
+									  nil];
+	[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
+
+	
 		// Initial UI Setup
 	[window addSubview:placeHolderViewController.view];
 	[window makeKeyAndVisible];
@@ -88,11 +100,24 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+	if(application)
+	{
+		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
+	}
+	
 	appActive = FALSE;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+	if (application)
+	{
+		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									 @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
+									 nil];
+		[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
+	}
+	
 	appActive = TRUE;
 	[timeCounter release];
 	timeCounter = [[NSDate date] retain];
@@ -100,14 +125,29 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+	if(application)
+	{
+		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
+	}
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+	if(application)
+	{
+		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
+	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+	if (application)
+	{
+		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									 @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
+									 nil];
+		[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
+	}
 }
 
 #pragma mark -
@@ -303,6 +343,8 @@
 
 - (IBAction)infoButton:(id)sender
 {
+	[FlurryAPI logEvent:@"Viewed Info Page"];
+	
 	if([infoView superview] == placeHolderViewController.view)
 	{
 		[UIView beginAnimations:nil context:NULL];
@@ -327,12 +369,19 @@
 
 - (IBAction)startGame:(id)sender
 {
+	[FlurryAPI logEvent:@"1"];
 	[glView newGraph:currentLevel];
+	
+	[FlurryAPI logEvent:@"2"];
 	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
 	
+	[FlurryAPI logEvent:@"3"];
 	if ([menuView superview] == placeHolderViewController.view)
 	{
+		[FlurryAPI logEvent:@"4"];
 		[adManager setParentView:glView andPosition:TRUE];
+		
+		[FlurryAPI logEvent:@"5"];
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
@@ -340,15 +389,22 @@
 		[menuView removeFromSuperview];
 		[placeHolderViewController.view addSubview:glView];
 		[UIView commitAnimations];
+		
+		[FlurryAPI logEvent:@"6"];
+
 	}
 		//Reset Counter
 	time = 0.0f;
 	[timeCounter release];
 	timeCounter = [[NSDate date] retain];
+	[FlurryAPI logEvent:@"7"];
+
 		//Set Label
 	[timerLabel setText:[NSString stringWithFormat:@"%.2f",time]];
+	[FlurryAPI logEvent:@"8"];
 	
 	glView->playingGame = TRUE;
+	[FlurryAPI logEvent:@"9"];
 }
 
 - (void) endGame

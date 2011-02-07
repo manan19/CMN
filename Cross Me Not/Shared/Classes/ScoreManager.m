@@ -122,7 +122,12 @@
 	
 	if (!bestTimes) 
 	{
-		bestTimes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"9990", @"1", @"9990", @"2",@"9990", @"3",@"9990", @"4",@"9990", @"5",@"9990", @"6",@"9990", @"7",@"9990", @"8",@"9990", @"9",@"9990", @"10", nil];
+		bestTimes = [[NSMutableDictionary alloc] init];
+		int i = 1;
+		while (i<=MAX_LEVELS) {
+			[bestTimes setObject:@"9990" forKey:[NSString stringWithFormat:@"%d",i++]];
+		}
+
 	}
 }
 

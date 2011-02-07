@@ -44,6 +44,7 @@
 		599A7C1D127AA11400A308DC /* MainWindow_Phone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59F2AD2E1156C2DD003BA387 /* MainWindow_Phone.xib */; };
 		599A7C1E127AA12000A308DC /* MainWindow_Phone.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59F2AD1E1156C0CA003BA387 /* MainWindow_Phone.strings */; };
 		59A43F9F12F9464300F057A2 /* AdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59A43F9E12F9464300F057A2 /* AdManager.m */; };
+		59B6F66912FF8D8A00280C8A /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59B6F66812FF8D8A00280C8A /* libFlurry.a */; };
 		59CCD927122784BF00C35FF3 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CCD926122784BF00C35FF3 /* iAd.framework */; };
 		59CCDAF11227B35E00C35FF3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59CCDAF01227B35E00C35FF3 /* Icon@2x.png */; };
 		59D109FB115614F800A1C2DD /* flip.gif in Resources */ = {isa = PBXBuildFile; fileRef = 59D109FA115614F800A1C2DD /* flip.gif */; };
@@ -117,6 +118,8 @@
 		5984A1DF12989BBC0013C17E /* CSerializedJSONData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSerializedJSONData.m; sourceTree = "<group>"; };
 		59A43F9D12F9464300F057A2 /* AdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdManager.h; sourceTree = "<group>"; };
 		59A43F9E12F9464300F057A2 /* AdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdManager.m; sourceTree = "<group>"; };
+		59B6F66712FF8D8A00280C8A /* FlurryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAPI.h; sourceTree = "<group>"; };
+		59B6F66812FF8D8A00280C8A /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		59CCD926122784BF00C35FF3 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		59CCDAF01227B35E00C35FF3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		59D109FA115614F800A1C2DD /* flip.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flip.gif; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 				5984A1C012989B8C0013C17E /* AudioToolbox.framework in Frameworks */,
 				5984A1C212989B8C0013C17E /* MediaPlayer.framework in Frameworks */,
 				5984A1C412989B8C0013C17E /* MessageUI.framework in Frameworks */,
+				59B6F66912FF8D8A00280C8A /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +186,7 @@
 		28EEBF621118D79A00187D67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				59B6F66612FF8D8A00280C8A /* FlurryLib */,
 				5984A138129893ED0013C17E /* AdMob */,
 				5955DCFB1155AF01001C813A /* Resources */,
 				5955DB6311558F62001C813A /* Classes */,
@@ -333,6 +338,16 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		59B6F66612FF8D8A00280C8A /* FlurryLib */ = {
+			isa = PBXGroup;
+			children = (
+				59B6F66712FF8D8A00280C8A /* FlurryAPI.h */,
+				59B6F66812FF8D8A00280C8A /* libFlurry.a */,
+			);
+			name = FlurryLib;
+			path = Shared/FlurryLib;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -456,6 +471,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shared/AdMob\"",
+					"\"$(SRCROOT)/Shared/FlurryLib\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -475,6 +491,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shared/AdMob\"",
+					"\"$(SRCROOT)/Shared/FlurryLib\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -513,6 +530,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shared/AdMob\"",
+					"\"$(SRCROOT)/Shared/FlurryLib\"",
 				);
 				PRODUCT_NAME = "Cross Me Not";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

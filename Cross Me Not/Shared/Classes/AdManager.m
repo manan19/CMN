@@ -99,6 +99,8 @@
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner 
 {
+	[FlurryAPI logEvent:@"iAd:bannerViewDidLoadAd"];
+
 	if (!adViewVisible) {
 		[self _animate:banner up:!adTop];
 		adViewVisible = TRUE;
@@ -107,6 +109,8 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
+	[FlurryAPI logEvent:@"iAd:didFailToReceiveAdWithError"];
+
 		//iAds failed
 	NSLog(@"%@",[error localizedDescription]);
 	if (adViewVisible)
@@ -119,9 +123,23 @@
 		//[banner release];
 }
 
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+	[FlurryAPI logEvent:@"iAd:bannerViewActionShouldBegin"];
+	[[[UIApplication sharedApplication] delegate] applicationWillResignActive:nil];
+	return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+	[[[UIApplication sharedApplication] delegate] applicationDidBecomeActive:nil];
+	[FlurryAPI logEvent:@"iAd:bannerViewActionDidFinish"];
+}
+
+
 #pragma mark -
 #pragma mark AdMobDelegate
 - (void)didReceiveAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:didReceiveAd"];
+
 	if (adTop)
 	{
 		[_adView setFrame:TOP_AD_FRAME];
@@ -143,7 +161,8 @@
 
 	// Sent when an ad request failed to load an ad
 - (void)didFailToReceiveAd:(AdMobView *)adView {
-	NSLog(@"AdMob: Did fail to receive ad");
+	[FlurryAPI logEvent:@"Admob:didFailToReceiveAd"];
+
 	if(adViewVisible)
 	{
 		[self _animate:adView up:adTop];
@@ -154,6 +173,39 @@
 - (NSString *)publisherIdForAd:(AdMobView *)adView {
 	return @"a14b84284a8b3d3";
 }
+
+- (void)didReceiveRefreshedAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:didReceiveRefreshedAd"];
+}
+
+- (void)didFailToReceiveRefreshedAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:didFailToReceiveRefreshedAd"];
+}
+
+- (void)willPresentFullScreenModalFromAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:willPresentFullScreenModalFromAd"];
+	[[[UIApplication sharedApplication] delegate] applicationWillResignActive:nil];
+}
+
+- (void)didPresentFullScreenModalFromAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:didPresentFullScreenModalFromAd"];
+}
+
+- (void)willDismissFullScreenModalFromAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:willDismissFullScreenModalFromAd"];
+}
+
+- (void)didDismissFullScreenModalFromAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:didDismissFullScreenModalFromAd"];
+	[[[UIApplication sharedApplication] delegate] applicationDidBecomeActive:nil];
+}
+
+- (void)applicationWillTerminateFromAd:(AdMobView *)adView {
+	[FlurryAPI logEvent:@"Admob:applicationWillTerminateFromAd"];
+}
+
+
+#pragma mark -
 
 - (UIViewController *)currentViewControllerForAd:(AdMobView *)adView {
 	return _parentViewController;
