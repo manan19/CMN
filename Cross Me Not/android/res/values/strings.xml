@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">CMN, Lines!</string>
+    <string name="app_name">Lines</string>
+<string name="selectlevel">Select Level</string>
+</resources>
