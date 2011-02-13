@@ -1,10 +1,16 @@
 /**
  * 
  */
-package com.cmnsteps.linedraw;
+package com.cmn.game;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import com.cmn.game.R;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.os.Bundle;
@@ -14,7 +20,7 @@ import android.os.Bundle;
  *
  */
 public class Menu extends Activity {
-	Board _board;
+	GameView _board;
 	
 	private Button _startButton;
 	private Spinner _levelSpinner;
@@ -26,10 +32,11 @@ public class Menu extends Activity {
 		
 		setContentView(R.layout.menu);
 		
+		_board = new GameView(this);
+		
 		_startButton = (Button) findViewById(R.id.start);
 		_levelSpinner = (Spinner) findViewById(R.id.Spinner01);
 		
-        _board = new Board(this);
         _startButton.setOnClickListener(new View.OnClickListener() 
         {
             public void onClick(View v) 
@@ -37,6 +44,18 @@ public class Menu extends Activity {
             	_start();
             }
         });
+        
+        ArrayList<Integer> levels = new ArrayList<Integer>();
+        for (int i = 0; i < 25; i++) { levels.add(i+1);	}
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        Iterator<Integer> iter = levels.iterator();
+        while(iter.hasNext())	{
+        	adapter.add(iter.next().toString());
+        }
+        
+        _levelSpinner.setAdapter(adapter);
 	}
 	/**
 	 * 

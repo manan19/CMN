@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.cmnsteps.linedraw;
+package com.cmn.game;
 
 public final class R {
     public static final class array {
