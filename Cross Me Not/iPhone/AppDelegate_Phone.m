@@ -32,12 +32,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 	[FlurryAPI setAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 	[FlurryAPI startSession:@"HZITZ7GERIG6LHLM5U7Q"];
-	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									  @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
-									  nil];
-	[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
 
-	
 		// Initial UI Setup
 	[window addSubview:placeHolderViewController.view];
 	[window makeKeyAndVisible];
@@ -50,7 +45,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 		// Check for In-App Purchases
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *results = [defaults stringForKey:productIdentifierAdFree];
-	if (!results) 
+	if (results) 
 	{
 		adFree = TRUE;
 	}
@@ -100,24 +95,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-	if(application)
-	{
-		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
-	}
-	
 	appActive = FALSE;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	if (application)
-	{
-		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									 @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
-									 nil];
-		[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
-	}
-	
 	appActive = TRUE;
 	[timeCounter release];
 	timeCounter = [[NSDate date] retain];
@@ -125,29 +107,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	if(application)
-	{
-		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
-	}
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	if(application)
-	{
-		[FlurryAPI endTimedEvent:@"InAppTime" withParameters:nil];
-	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	if (application)
-	{
-		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-									 @"deviceId", [[UIDevice currentDevice] uniqueIdentifier],  
-									 nil];
-		[FlurryAPI logEvent:@"InAppTime" withParameters:dict timed:YES];
-	}
 }
 
 #pragma mark -
@@ -378,33 +345,28 @@ void uncaughtExceptionHandler(NSException *exception) {
 	[FlurryAPI logEvent:@"3"];
 	if ([menuView superview] == placeHolderViewController.view)
 	{
-		[FlurryAPI logEvent:@"4"];
 		[adManager setParentView:glView andPosition:TRUE];
-		
-		[FlurryAPI logEvent:@"5"];
-		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.8];
 		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:placeHolderViewController.view cache:YES];
 		[menuView removeFromSuperview];
 		[placeHolderViewController.view addSubview:glView];
 		[UIView commitAnimations];
-		
-		[FlurryAPI logEvent:@"6"];
-
 	}
+	[FlurryAPI logEvent:@"4"];
+
 		//Reset Counter
 	time = 0.0f;
 	[timeCounter release];
 	timeCounter = [[NSDate date] retain];
-	[FlurryAPI logEvent:@"7"];
+	[FlurryAPI logEvent:@"5"];
 
 		//Set Label
 	[timerLabel setText:[NSString stringWithFormat:@"%.2f",time]];
-	[FlurryAPI logEvent:@"8"];
+	[FlurryAPI logEvent:@"6"];
 	
 	glView->playingGame = TRUE;
-	[FlurryAPI logEvent:@"9"];
+	[FlurryAPI logEvent:@"7"];
 }
 
 - (void) endGame
