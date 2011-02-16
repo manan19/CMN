@@ -120,6 +120,13 @@
 	NSString *appFile = [self _getFilePath];
 	bestTimes = [[NSMutableDictionary alloc] initWithContentsOfFile:appFile];
 	
+	int j = 1;
+	while (j<=MAX_LEVELS) {
+		NSString *key = [NSString stringWithFormat:@"%d",j++];
+		if( ![bestTimes objectForKey:key] )
+		[bestTimes setObject:@"9990" forKey:key];
+	}
+	
 	if (!bestTimes) 
 	{
 		bestTimes = [[NSMutableDictionary alloc] init];
@@ -134,6 +141,9 @@
 - (void) _writeBestTimes
 {
 	NSString *appFile = [self _getFilePath];
+	if (!bestTimes) {
+		bestTimes = [[NSMutableDictionary alloc] init];
+	}
 	[bestTimes writeToFile:appFile atomically:YES];
 }
 
