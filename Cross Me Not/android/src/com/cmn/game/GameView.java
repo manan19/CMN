@@ -19,7 +19,7 @@ public class GameView extends View
 	Canvas _canvas;
 	Paint _paint;
 	Paint _paintPoint;
-	Paint _paintSelected;
+	Paint _paintSelectedPoint;
 	
 	Point _endPoint;
 	Point _startPoint;
@@ -30,17 +30,17 @@ public class GameView extends View
 	{
 		super(context);
 		_paint = new Paint();
-		_paint.setColor(Color.RED);
+		_paint.setColor(Color.BLACK);
 		_paint.setStyle(Style.STROKE);
 		_paint.setStrokeWidth(2);
 		
-		_paintSelected = new Paint();
-		_paintSelected.setColor(Color.WHITE);
-		_paintSelected.setStyle(Style.STROKE);
-		_paintSelected.setStrokeWidth(2);
+		_paintSelectedPoint = new Paint();
+		_paintSelectedPoint.setColor(Color.GREEN);
+		_paintSelectedPoint.setStyle(Style.STROKE);
+		_paintSelectedPoint.setStrokeWidth(2);
 		
 		_paintPoint = new Paint();
-		_paintPoint.setColor(Color.YELLOW);
+		_paintPoint.setColor(Color.RED);
 		_paintPoint.setStyle(Style.FILL);
 		_paintPoint.setStrokeWidth(3);
 		
@@ -58,6 +58,7 @@ public class GameView extends View
         setMeasuredDimension(_width, _height);
         
         _bitmap = Bitmap.createBitmap(_width, _height, Bitmap.Config.ARGB_8888);
+        _bitmap.eraseColor(Color.WHITE);
         _canvas = new Canvas(_bitmap);
         
         _graph = new Graph(_width, _height);
@@ -125,7 +126,7 @@ public class GameView extends View
 			_graph.moveSelectedVertexToLocation(currentPoint);
 			
 			_graph.checkGraphForIntersections();
-			_canvas.drawColor(Color.BLACK);
+			_canvas.drawColor(Color.WHITE);
 			render();
 			invalidate();
 		}
@@ -136,7 +137,7 @@ public class GameView extends View
 			{
 				_graph.connectedVertices[i] = 0;
 			}
-			_canvas.drawColor(Color.BLACK);
+			_canvas.drawColor(Color.WHITE);
 			render();
 			invalidate();
 		}
@@ -152,19 +153,15 @@ public class GameView extends View
         	int v1 = _graph.edges[i].vert1;
         	int v2 = _graph.edges[i].vert2;
         	
-        	if (v1 == _graph.selectedVertex || v2 == _graph.selectedVertex)
-        	{
-        		_canvas.drawLine(_graph.vertices[v1].x,_graph.vertices[v1].y, _graph.vertices[v2].x, _graph.vertices[v2].y, _paintSelected);
-        	}
-        	else
-        	{
-        		_canvas.drawLine(_graph.vertices[v1].x,_graph.vertices[v1].y, _graph.vertices[v2].x, _graph.vertices[v2].y, _paint);
-        	}
+        	_canvas.drawLine(_graph.vertices[v1].x,_graph.vertices[v1].y, _graph.vertices[v2].x, _graph.vertices[v2].y, _paint);
         }
 		
 		for (int i=0;i<_graph.vertexCount;i++)
 		{
-			_canvas.drawCircle(_graph.vertices[i].x,_graph.vertices[i].y,5 , _paintPoint);
+			if( _graph.connectedVertices[i] == 1 )
+				_canvas.drawCircle(_graph.vertices[i].x,_graph.vertices[i].y,5 , _paintSelectedPoint);
+			else
+				_canvas.drawCircle(_graph.vertices[i].x,_graph.vertices[i].y,5 , _paintPoint);
 		}
 		
 		

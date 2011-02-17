@@ -5,7 +5,7 @@
   android:layout_height="fill_parent">
 	
 	<ImageView android:layout_centerInParent="true"
-		android:id="@+id/ImageView01"
+		android:id="@+id/menuImageView"
 		android:src="@drawable/menu" 
 		android:background="#FFF"
 		android:layout_width="wrap_content" 
@@ -14,7 +14,7 @@
 		
 <Button android:layout_toLeftOf="@+id/Spinner01"
  android:layout_width="30dip"
-  android:id="@+id/Button01" 
+  android:id="@+id/infoButton" 
   android:textStyle="normal"
     android:text="i"
   android:layout_centerVertical="true"
@@ -43,7 +43,7 @@ android:id="@+id/TextView01"
 <Button android:layout_width="200dip"
  android:layout_centerHorizontal="true"
  android:layout_marginTop="300dip"
- android:id="@+id/start"
+ android:id="@+id/startButton"
  android:text="Start"
  android:textSize="20dip"
  android:textColor="#000"
