@@ -7,13 +7,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.admob.android.ads.AdView;
+
 /**
  * @author manan19
  *
  */
-public final class Game extends Activity {
+public final class Game extends Activity 
+{
 	GameView _gameView;
-
+	AdView _adView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -22,6 +26,9 @@ public final class Game extends Activity {
 		
 		_gameView = new GameView(this);
 		setContentView(_gameView);
+		
+		// adview
+		
 	}
 	
     protected void onRestart()

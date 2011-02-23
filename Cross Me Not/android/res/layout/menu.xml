@@ -42,7 +42,7 @@ android:id="@+id/TextView01"
 
 <Button android:layout_width="200dip"
  android:layout_centerHorizontal="true"
- android:layout_marginTop="300dip"
+ android:layout_marginTop="270dip"
  android:id="@+id/startButton"
  android:text="Start"
  android:textSize="20dip"

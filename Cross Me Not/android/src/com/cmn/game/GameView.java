@@ -1,6 +1,8 @@
 package com.cmn.game;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,6 +27,7 @@ public class GameView extends View
 	Point _startPoint;
 	Boolean _touchLegal;
 	Graph _graph;
+	AlertDialog _alert;
 	
 	public GameView(Context context)
 	{
@@ -47,6 +50,21 @@ public class GameView extends View
 		this.setFocusable(true);
 		_touchLegal = false;
 
+		// alert view code
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("You Win")
+		.setCancelable(false)
+		.setPositiveButton("ShowSuccess", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				stareSuccess();
+           		}	
+       		})
+       		.setNegativeButton("NextLevel", new DialogInterface.OnClickListener() {
+       			public void onClick(DialogInterface dialog, int id) {
+       				newGame(1);
+       			}
+       		});
+		_alert = builder.create();
 		
 	}
 	
@@ -63,10 +81,6 @@ public class GameView extends View
         
         _graph = new Graph(_width, _height);
         _graph.initGraph(0);
-        
-       /* _endPoint = new Point(_width, _height);
-        _startPoint = new Point(_width/2, _height/2);
-        _canvas.drawLine(_startPoint.x,_startPoint.y, _endPoint.x, _endPoint.y, _paint);*/
         
         render();
 	}
@@ -125,7 +139,12 @@ public class GameView extends View
 			
 			_graph.moveSelectedVertexToLocation(currentPoint);
 			
-			_graph.checkGraphForIntersections();
+			int numIntersections = _graph.checkGraphForIntersections();
+			if (numIntersections == 0)
+			{
+				_alert.show();
+				
+			}
 			_canvas.drawColor(Color.WHITE);
 			render();
 			invalidate();
@@ -145,6 +164,7 @@ public class GameView extends View
 		
 		return true;
 	}
+	
 	
 	private void render()
 	{
@@ -172,6 +192,18 @@ public class GameView extends View
 		return ((p1.x-p2.x)*(p1.x-p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
 	} 
 
+	public void newGame(int lvl)
+	{
+		_graph.initGraph(lvl);
+		_canvas.drawColor(Color.WHITE);
+		render();
+		invalidate();
+	}
+	
+	public void stareSuccess() 
+	{
+		
+	}
 	
 }
 
