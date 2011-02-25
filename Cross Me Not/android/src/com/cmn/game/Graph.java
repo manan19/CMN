@@ -126,20 +126,20 @@ public class Graph
 	public void initGraph(int lvl) 
 	{
 		int xLim = _screenWidth - 5;
-		int yLim = _screenHeight - 5;
+		int yLim = _screenHeight - 100;
 		
 		vertices[0].x = _rand.nextInt(xLim) + 5;
-		vertices[0].y = _rand.nextInt(yLim) + 5;
+		vertices[0].y = _rand.nextInt(yLim) + 100; // to adjust for the adview on top
 		vertices[1].x = _rand.nextInt(xLim) + 5;
-		vertices[1].y = _rand.nextInt(yLim) + 5;
+		vertices[1].y = _rand.nextInt(yLim) + 100;
 		vertices[2].x = _rand.nextInt(xLim) + 5;
-		vertices[2].y = _rand.nextInt(yLim) + 5;
+		vertices[2].y = _rand.nextInt(yLim) + 100;
 		vertices[3].x = _rand.nextInt(xLim) + 5;
-		vertices[3].y = _rand.nextInt(yLim) + 5;
+		vertices[3].y = _rand.nextInt(yLim) + 100;
 		vertices[4].x = _rand.nextInt(xLim) + 5;
-		vertices[4].y = _rand.nextInt(yLim) + 5;
+		vertices[4].y = _rand.nextInt(yLim) + 100;
 		vertices[5].x = _rand.nextInt(xLim) + 5;
-		vertices[5].y = _rand.nextInt(yLim) + 5;
+		vertices[5].y = _rand.nextInt(yLim) + 100;
 		
 		
 		edges[0].vert1 = 0;

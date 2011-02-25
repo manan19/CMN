@@ -6,7 +6,9 @@ package com.cmn.game;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup.LayoutParams;
 
+import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
 
 /**
@@ -29,6 +31,10 @@ public final class Game extends Activity
 		
 		// adview
 		
+		AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
+		_adView = new AdView(this);
+		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
+		addContentView(_adView,param);
 	}
 	
     protected void onRestart()
