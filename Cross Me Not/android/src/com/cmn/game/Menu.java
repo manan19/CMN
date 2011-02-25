@@ -80,11 +80,13 @@ public final class Menu extends Activity {
     	super.onResume();
     	
     	_startButton.setEnabled(true);
+    	_infoButton.setEnabled(true);
     }
 
     protected void onPause()
     {
     	_startButton.setEnabled(false);
+    	_infoButton.setEnabled(false);
     	
     	Log.i("Menu", "onPause");
     	super.onPause();
@@ -96,11 +98,13 @@ public final class Menu extends Activity {
     	super.onStart();
     	
     	_startButton.setEnabled(true);
+    	_infoButton.setEnabled(true);
     }
     
     protected void onStop()
     {
     	_startButton.setEnabled(false);
+    	_infoButton.setEnabled(false);
     	
     	Log.i("Menu", "onStop");
     	super.onStop();

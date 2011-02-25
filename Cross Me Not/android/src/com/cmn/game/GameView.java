@@ -38,8 +38,8 @@ public class GameView extends View
 		_paint.setStrokeWidth(2);
 		
 		_paintSelectedPoint = new Paint();
-		_paintSelectedPoint.setColor(Color.GREEN);
-		_paintSelectedPoint.setStyle(Style.STROKE);
+		_paintSelectedPoint.setColor(Color.BLUE);
+		_paintSelectedPoint.setStyle(Style.FILL);
 		_paintSelectedPoint.setStrokeWidth(2);
 		
 		_paintPoint = new Paint();
