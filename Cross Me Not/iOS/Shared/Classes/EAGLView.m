@@ -46,16 +46,16 @@
 		screenWidth = [UIScreen mainScreen].currentMode.size.width;
 		screenHeight = [UIScreen mainScreen].currentMode.size.height;
 		
-		if (screenWidth > 320) 
+		if (screenWidth != 320 && screenWidth!= 640) 
 		{
+				// It's an iPad. Restrict to normal size
+			screenWidth = 320;
+			screenHeight = 480;
+		}
 				// It's the iPhone4
-			renderer->scale = 2;
-			eaglLayer.contentsScale = 2;
-		}
-		else 
-		{
-			renderer->scale = 1;
-		}
+		renderer->scale = screenWidth/320;
+		
+		eaglLayer.contentsScale = renderer->scale;
 		
 		playingGame = FALSE;
 		aView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Well Done",@"") message:NSLocalizedString(@"What would you like to do?",@"") delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Play Again",@""),NSLocalizedString(@"Play Next Level",@""),NSLocalizedString(@"Go Back To Menu",@""),NSLocalizedString(@"Stare at your Success",@""),nil];

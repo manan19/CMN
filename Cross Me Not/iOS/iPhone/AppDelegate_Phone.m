@@ -34,9 +34,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 	[FlurryAPI startSession:@"HZITZ7GERIG6LHLM5U7Q"];
 
 		// Initial UI Setup
+	[placeHolderViewController.view addSubview:menuView];
 	[window addSubview:placeHolderViewController.view];
 	[window makeKeyAndVisible];
-	[placeHolderViewController.view addSubview:menuView];
 	
 		// Initial setup for In-App Purchases
 	productIdentifierAdFree = @"com.mp.crossmenot.adfree";
@@ -55,7 +55,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 	}
 	
 		// Setup Ads if NOT Ad Free
-	if (adFree)
+	if (!adFree)
 	{
 		adManager = [[AdManager alloc] init];
 		[adManager setParentViewController:placeHolderViewController];
