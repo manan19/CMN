@@ -29,9 +29,8 @@ public final class Game extends Activity
 		_gameView = new GameView(this);
 		setContentView(_gameView);
 		
-		// adview
-		
-		AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
+		// this line is only for testing
+		//AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
 		_adView = new AdView(this);
 		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
 		addContentView(_adView,param);
