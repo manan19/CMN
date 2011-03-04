@@ -129,6 +129,8 @@ public final class Menu extends Activity {
 	public void startButtonClicked()
 	{
 		Intent i = new Intent(this, Game.class);
+		int lvl = Integer.parseInt(_levelSpinner.getSelectedItem().toString());
+		i.putExtra("selectedLevel", lvl);
         startActivity(i);
 	}
 	
