@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.cmn.game.R;
+import com.flurry.android.FlurryAgent;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,6 +33,8 @@ public final class Menu extends Activity {
 	{
     	Log.i("Menu", "onCreate");
 		super.onCreate(savedInstanceState);
+		
+		FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
 		
 		setContentView(R.layout.menu);
 		
@@ -114,6 +117,8 @@ public final class Menu extends Activity {
     {
     	Log.i("Menu", "onDestroy");
     	super.onDestroy();
+    	
+		FlurryAgent.onEndSession(this);
     }
     
 	/**
