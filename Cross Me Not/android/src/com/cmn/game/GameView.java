@@ -229,6 +229,7 @@ public class GameView extends View
 		_canvas.drawColor(Color.WHITE);
 		render();
 		invalidate();
+		Game.timer.start();
 	}
 	
 	public void stareSuccess() 

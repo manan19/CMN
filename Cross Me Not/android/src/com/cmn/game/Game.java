@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.admob.android.ads.AdView;
+//import com.admob.android.ads.AdView;
 
 /**
  * @author manan19
@@ -20,10 +20,13 @@ import com.admob.android.ads.AdView;
 public final class Game extends Activity 
 {
 	GameView _gameView;
-	AdView _adView;
-	TextView _timerLabel;
+	//AdView _adView;
 	int _selectedLevel;
 	float _timer;
+	TextView _timerLabel;
+	
+	public
+	static CountDownTimer timer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,14 +41,16 @@ public final class Game extends Activity
 		
 		// this line is only for testing
 		//AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
-		_adView = new AdView(this);
-		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
-		addContentView(_adView,param);
+		//_adView = new AdView(this);
+		//LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
+		
+		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+		//addContentView(Menu.adView,param);
 		
 		_timer = 0;
 		_timerLabel = new TextView(this);
 		_timerLabel.setTextColor(Color.BLACK);
-		new CountDownTimer( 6000000, 17) {
+		timer =  new CountDownTimer( 6000000, 17) {
 			
 			@Override
 			public void onTick(long millisUntilFinished) {
