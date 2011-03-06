@@ -30,10 +30,12 @@ public class GameView extends View
 	Boolean _touchLegal;
 	Graph _graph;
 	AlertDialog _alert;
+	Boolean _gameComplete;
 	
 	public GameView(Context context , int level)
 	{
 		super(context);
+
 		_paintLineBlack = new Paint();
 		_paintLineBlack.setColor(Color.BLACK);
 		_paintLineBlack.setStyle(Style.STROKE);
@@ -43,6 +45,9 @@ public class GameView extends View
 		_paintLineGreen.setColor(Color.GREEN);
 		_paintLineGreen.setStyle(Style.STROKE);
 		_paintLineGreen.setStrokeWidth(2);
+		
+		_gameComplete = false;
+
 		
 		_paintSelectedPoint = new Paint();
 		_paintSelectedPoint.setColor(Color.BLUE);
@@ -103,15 +108,22 @@ public class GameView extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
 	{
+		if (_gameComplete)
+		{
+			_graph.selectedVertex = -1;
+			for (int i = 0; i < _graph.vertexCount; i++) 
+			{
+				_graph.connectedVertices[i] = 0;
+			}
+			_canvas.drawColor(Color.WHITE);
+			render();
+			invalidate();
+			return true;
+		}
 		if (event.getAction() == MotionEvent.ACTION_DOWN)
 		{
 			Point currentPoint = new Point((int)event.getX(),(int)event.getY());
-			
-			/*if (Distance(currentPoint,_endPoint))
-			{
-				_touchLegal = true;
-				
-			}*/
+
 			
 			int leastDistance = 625;
 			int thisDistance;
@@ -146,8 +158,13 @@ public class GameView extends View
 			
 			_graph.moveSelectedVertexToLocation(currentPoint);
 			
-			_graph.checkGraphForIntersections();
-			
+			int numIntersections = _graph.checkGraphForIntersections();
+			if (numIntersections == 0)
+			{
+				_alert.show();
+				_gameComplete = true;
+			}
+
 			_canvas.drawColor(Color.WHITE);
 			render();
 			invalidate();
@@ -207,6 +224,7 @@ public class GameView extends View
 
 	public void newGame(int lvl)
 	{
+		_gameComplete = false;
 		_graph.initGraph(lvl);
 		_canvas.drawColor(Color.WHITE);
 		render();
