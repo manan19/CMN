@@ -11,12 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.admob.android.ads.AdView;
 import com.flurry.android.FlurryAgent;
 
 /**
@@ -28,8 +26,6 @@ public final class Menu extends Activity {
 	private Button _startButton;
 	private Button _infoButton;
 	private Spinner _levelSpinner;
-
-	public static AdView adView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -40,14 +36,6 @@ public final class Menu extends Activity {
 		FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
 		
 		setContentView(R.layout.menu);
-		
-		
-		//Static Adview
-		// this line is only for testing
-		//AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
-		adView = new AdView(this);
-		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
-		addContentView(adView,param);
 		
 		_startButton = (Button) findViewById(R.id.startButton);
 		_infoButton = (Button) findViewById(R.id.infoButton);

@@ -3,6 +3,8 @@
  */
 package com.cmn.game;
 
+import com.admob.android.ads.AdView;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,13 +22,12 @@ import android.widget.TextView;
 public final class Game extends Activity 
 {
 	GameView _gameView;
-	//AdView _adView;
+	AdView _adView;
 	int _selectedLevel;
 	float _timer;
 	TextView _timerLabel;
 	
-	public
-	static CountDownTimer timer;
+	public static CountDownTimer timer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,13 +40,9 @@ public final class Game extends Activity
 		_gameView = new GameView(this, _selectedLevel);
 		setContentView(_gameView);
 		
-		// this line is only for testing
-		//AdManager.setTestDevices(new String[]{AdManager.TEST_EMULATOR,"E83D20734F72FB3108F104ABC0FFC738",});
-		//_adView = new AdView(this);
-		//LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT); 
-		
+		_adView = new AdView(this);
 		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-		//addContentView(Menu.adView,param);
+		addContentView(_adView,param);
 		
 		_timer = 0;
 		_timerLabel = new TextView(this);
@@ -55,7 +52,10 @@ public final class Game extends Activity
 			@Override
 			public void onTick(long millisUntilFinished) {
 				// TODO Auto-generated method stub
-				_timer = (6000000-millisUntilFinished)/1000;
+				_timer = 6000000-millisUntilFinished;
+				_timer = _timer/10;
+				_timer = Math.round(_timer);
+				_timer = _timer/100;
 				_timerLabel.setText(String.valueOf(_timer));
 			}
 			
@@ -65,7 +65,7 @@ public final class Game extends Activity
 				
 			}
 		}.start();
-		addContentView(_timerLabel, param);
+		//addContentView(_timerLabel, param);
 	}
 	
     protected void onRestart()

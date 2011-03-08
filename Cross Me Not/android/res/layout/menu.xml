@@ -13,13 +13,13 @@
 		</ImageView>
 		
 <Button android:layout_toLeftOf="@+id/Spinner01"
- android:layout_width="30dip"
+ android:layout_width="35dip"
   android:id="@+id/infoButton" 
-  android:textStyle="normal"
+  android:textStyle="italic"
     android:text="i"
   android:layout_centerVertical="true"
   android:layout_marginRight="50dip"
-   android:layout_height="30dip">
+   android:layout_height="35dip">
     </Button>
     
 <TextView android:layout_width="wrap_content" 
@@ -49,8 +49,6 @@ android:id="@+id/TextView01"
  android:textColor="#000"
  android:layout_height="wrap_content">
    </Button>
-
-
 
 
 </RelativeLayout>

@@ -158,12 +158,7 @@ public class GameView extends View
 			
 			_graph.moveSelectedVertexToLocation(currentPoint);
 			
-			int numIntersections = _graph.checkGraphForIntersections();
-			if (numIntersections == 0)
-			{
-				_alert.show();
-				_gameComplete = true;
-			}
+			_graph.checkGraphForIntersections();
 
 			_canvas.drawColor(Color.WHITE);
 			render();
@@ -181,6 +176,8 @@ public class GameView extends View
 			if (numIntersections == 0)
 			{
 				_alert.show();
+				_gameComplete = true;
+				Game.timer.cancel();
 			}
 			
 			_canvas.drawColor(Color.WHITE);
