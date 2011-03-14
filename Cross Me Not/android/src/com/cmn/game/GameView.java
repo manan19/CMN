@@ -51,7 +51,6 @@ public class GameView extends LinearLayout
 	CountDownTimer timer;
     
 	public GameView(Context context) {
-        // initialisation code
 		super(context);
     }
     public GameView(Context context, AttributeSet attrs) {
@@ -61,7 +60,6 @@ public class GameView extends LinearLayout
 	public GameView(Context context, int level) {
 		super(context);		
 		setWillNotDraw(false);
-		setChildrenDrawingOrderEnabled(true);
 		
 		_paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_paintText.setColor(Color.BLACK);
@@ -134,7 +132,6 @@ public class GameView extends LinearLayout
 				Log.i("Menu","timerfinish");
 			}
 		};
-		//addView(_drawingBoard);
 		addView(_timerLabel);
 	}
 	
@@ -164,7 +161,7 @@ public class GameView extends LinearLayout
         _bitmap.eraseColor(Color.WHITE);
         _canvas = new Canvas(_bitmap);
         
-        _clippingRect = new Rect(0, 50, screenWidth, screenHeight);
+        _clippingRect = new Rect(0, screenHeight/10, screenWidth, screenHeight);
         _graph = new Graph(_clippingRect);
         newGame(_level);
 	}
