@@ -12,19 +12,19 @@
 		android:layout_height="wrap_content">
 		</ImageView>
 		
-<Button android:layout_toLeftOf="@+id/Spinner01"
+<Button android:layout_toLeftOf="@+id/levelSpinner"
  android:layout_width="35dip"
   android:id="@+id/infoButton" 
   android:textStyle="italic"
-    android:text="i"
+    android:text="\?"
   android:layout_centerVertical="true"
   android:layout_marginRight="50dip"
    android:layout_height="35dip">
     </Button>
     
 <TextView android:layout_width="wrap_content" 
-android:id="@+id/TextView01"
- android:layout_above="@+id/Spinner01"
+android:id="@+id/selectLevelTextView"
+ android:layout_above="@+id/levelSpinner"
  android:layout_centerHorizontal="true" 
  android:text="@string/selectlevel"
  android:textSize="20dip"
@@ -32,17 +32,48 @@ android:id="@+id/TextView01"
   android:layout_height="wrap_content">
 </TextView>
 
+    
+<TextView android:layout_width="wrap_content" 
+android:id="@+id/bestTimeTextView"
+ android:layout_toRightOf="@+id/levelSpinner"
+ android:width="62dip"
+ android:layout_above="@+id/startButton"
+ android:textStyle="italic"
+ android:layout_marginLeft="30dip" 
+ android:layout_marginBottom="30dip"
+ android:text="@string/besttime"
+ android:textSize="14dip"
+ android:textColor="#000"
+  android:layout_height="wrap_content">
+</TextView>
+
+<TextView android:layout_width="wrap_content" 
+android:id="@+id/timeTextView"
+ android:layout_toRightOf="@+id/levelSpinner"
+ android:width="62dip"
+ android:layout_above="@+id/startButton"
+ android:textStyle="italic"
+ android:layout_marginLeft="30dip" 
+ android:layout_marginBottom="10dip"
+ android:text="15.00 s"
+ android:gravity="center"
+ android:textSize="14dip"
+ android:textColor="#000"
+  android:layout_height="wrap_content">
+</TextView>
+
+
 <Spinner android:layout_width="wrap_content"
- android:id="@+id/Spinner01"
+ android:id="@+id/levelSpinner"
  android:layout_height="50dip"
  android:layout_centerInParent="true"
- android:prompt="@string/selectlevel"
->
+ android:prompt="@string/selectlevel">
 </Spinner>
 
 <Button android:layout_width="200dip"
  android:layout_centerHorizontal="true"
- android:layout_marginTop="270dip"
+ android:layout_below="@+id/levelSpinner"
+ android:layout_marginTop="30dip"
  android:id="@+id/startButton"
  android:text="Start"
  android:textSize="20dip"

@@ -4,6 +4,7 @@
 package com.cmn.game;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,6 +17,8 @@ public class Info extends Activity {
 	{
     	Log.i("Info", "onCreate");
 		super.onCreate(savedInstanceState);
+		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		
 		setContentView(R.layout.info);
 	}
