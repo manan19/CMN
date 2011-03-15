@@ -3,8 +3,7 @@
       package="com.cmn.game"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="1" 
-    		  android:targetSdkVersion="9"/>
+    <uses-sdk android:minSdkVersion="3" />
 
     <application android:icon="@drawable/icon" android:label="@string/appname" android:theme="@android:style/Theme.NoTitleBar">
         <activity android:name=".Menu">
@@ -31,6 +30,4 @@
 		</intent-filter>
 		</receiver>      
     </application>
-    <!-- AdMob SDK requires Internet permission -->
-  <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

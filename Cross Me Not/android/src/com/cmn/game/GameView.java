@@ -78,11 +78,11 @@ public class GameView extends LinearLayout
 		
 		_gameComplete = false;
 		
-		_paintSelectedPoint = new Paint();
+		_paintSelectedPoint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_paintSelectedPoint.setColor(Color.BLUE);
 		_paintSelectedPoint.setStyle(Style.FILL);
 		
-		_paintPoint = new Paint();
+		_paintPoint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_paintPoint.setColor(Color.RED);
 		_paintPoint.setStyle(Style.FILL);
 		
@@ -145,8 +145,8 @@ public class GameView extends LinearLayout
         // Has been manipulated to scale according to screen size
         float drawScale;
         drawScale = (screenWidth + screenHeight)/600;
-        _paintPoint.setStrokeWidth(drawScale*5.0f);
-        _paintSelectedPoint.setStrokeWidth(drawScale*5.0f);
+        _paintPoint.setStrokeWidth(drawScale*7.0f);
+        _paintSelectedPoint.setStrokeWidth(drawScale*7.0f);
         _paintLineBlack.setStrokeWidth(drawScale*2.0f);
         _paintLineGreen.setStrokeWidth(drawScale*2.0f);
         _paintText.setTextSize(drawScale*15);
