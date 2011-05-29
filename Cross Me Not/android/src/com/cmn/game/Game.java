@@ -1,5 +1,6 @@
 package com.cmn.game;
 
+import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
 
 import android.app.Activity;
@@ -31,6 +32,14 @@ public final class Game extends Activity
 		_gameView = new GameView(this, _selectedLevel);
 		setContentView(_gameView);
 		
+		AdManager.setAllowUseOfLocation(true);
+		// Amazon Market
+		//AdManager.setPublisherId("a14d8c2fbb00b33");
+		// Android Market
+		AdManager.setPublisherId("a14d584ff9994b4");
+		// GetJar
+		//AdManager.setPublisherId("a14d8c317a376ff");
+
 		_adView = new AdView(this);
 		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
 		addContentView(_adView,param);

@@ -15,9 +15,6 @@
 		<activity android:name="Game"/>
 		<activity android:name="Info"/>  
 		
-		<!-- The application's publisher ID assigned by AdMob -->
-		<meta-data android:value="a14d584ff9994b4" android:name="ADMOB_PUBLISHER_ID" />
-        
 		<!-- AdMobActivity definition -->
 		<activity android:name="com.admob.android.ads.AdMobActivity"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
