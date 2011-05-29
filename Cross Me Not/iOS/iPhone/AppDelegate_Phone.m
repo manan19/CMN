@@ -387,7 +387,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 	[productAdFree release];
 	[removeAdsButton release];
 	[productsReq release];
-	
+	[adManager release];
+    [scoreManager release];
+
 	[super dealloc];
 }
 

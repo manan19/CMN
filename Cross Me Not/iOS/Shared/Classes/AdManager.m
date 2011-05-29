@@ -13,7 +13,7 @@
 
 -(id)init
 {
-    if (self = [super init])
+    if ((self = [super init]))
     {
 		adViewVisible = FALSE;
 		
@@ -24,6 +24,8 @@
 		if ([countryCode isEqualToString:@"US"] ||
 			[countryCode isEqualToString:@"GB"] ||
 			[countryCode isEqualToString:@"FR"] ||
+			[countryCode isEqualToString:@"JP"] ||
+            [countryCode isEqualToString:@"IT"] ||
 			[countryCode isEqualToString:@"DE"])
 		{
 				// Use iAds
