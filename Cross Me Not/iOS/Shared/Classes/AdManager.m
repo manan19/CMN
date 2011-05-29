@@ -17,39 +17,7 @@
     {
 		adViewVisible = FALSE;
 		
-			// Get user's country code based on currentLocale
-		NSLocale *locale = [NSLocale currentLocale];
-		NSString *countryCode = [locale objectForKey: NSLocaleCountryCode];
-		
-		if ([countryCode isEqualToString:@"US"] ||
-			[countryCode isEqualToString:@"GB"] ||
-			[countryCode isEqualToString:@"FR"] ||
-			[countryCode isEqualToString:@"JP"] ||
-            [countryCode isEqualToString:@"IT"] ||
-			[countryCode isEqualToString:@"DE"])
-		{
-				// Use iAds
-			ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
-			iadView.frame = CGRectOffset(iadView.frame, 0, 50);
-			if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
-			{
-				[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
-				[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
-			}
-			else 
-			{
-				[iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
-				[iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
-			}
-			
-			[iadView setDelegate:self];
-			_adView = iadView;			
-		}
-		else 
-		{
-				// Use Admob
-			_adView = [AdMobView requestAdWithDelegate:self];
-		}
+        [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://api.hostip.info/country.php"]] delegate:self startImmediately:YES];
     }	
     return self;
 }
@@ -96,6 +64,100 @@
 }
 
 
+- (void)_animate:(UIView*)adView up:(BOOL)up
+{
+	if (up)
+	{
+        //if (adView.frame.origin.y == 480) 
+		{
+			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+			adView.frame = CGRectOffset(adView.frame, 0, -50);
+			[UIView commitAnimations];	
+		}
+	}
+	else 
+	{
+        //if (adView.frame.origin.y == -50) 
+		{
+			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
+			adView.frame = CGRectOffset(adView.frame, 0, 50);
+			[UIView commitAnimations];
+		}
+	}
+}
+
+
+-(void) dealloc
+{
+	[_adView release];
+    [countryCode release];
+    [_parentView release];
+    [_parentViewController release];
+	
+	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark NSURLConnection delegate methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    NSString* newStr = [[NSString alloc] initWithData:data                                                     encoding:NSUTF8StringEncoding];
+    countryCode = newStr;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    // Get user's country code based on currentLocale
+    NSLocale *locale = [NSLocale currentLocale];
+    countryCode = [locale objectForKey: NSLocaleCountryCode];
+    
+    if ( countryCode == nil )
+        countryCode = [locale objectForKey: NSLocaleCountryCode];
+    if ([countryCode isEqualToString:@"XX"])
+        countryCode = [locale objectForKey: NSLocaleCountryCode];
+    
+    if ([countryCode isEqualToString:@"US"] ||
+        [countryCode isEqualToString:@"GB"] ||
+        [countryCode isEqualToString:@"FR"] ||
+        [countryCode isEqualToString:@"IT"] ||
+        [countryCode isEqualToString:@"JP"] ||
+        [countryCode isEqualToString:@"DE"])
+    {
+        // Use iAds
+        ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
+        iadView.frame = CGRectOffset(iadView.frame, 0, 50);
+        if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
+        {
+            [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
+            [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
+        }
+        else 
+        {
+            [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
+            [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
+        }
+        
+        [iadView setDelegate:self];
+        _adView = iadView;			
+    }
+    else 
+    {
+        // Use Admob
+        //_adView = [AdMobView requestAdWithDelegate:self];
+        GADBannerView* bannerView = [[GADBannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        bannerView.adUnitID = @"a14b84284a8b3d3";
+        bannerView.rootViewController = _parentViewController;
+        GADRequest* req = [GADRequest request];
+        req.testDevices = [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+        [bannerView loadRequest:req];
+        bannerView.delegate = self;
+        
+        _adView = bannerView;
+    }
+}
+
+
 #pragma mark -
 #pragma mark ADBannerViewDelegate methods
 
@@ -136,22 +198,20 @@
 	[FlurryAPI logEvent:@"iAd:bannerViewActionDidFinish"];
 }
 
-
 #pragma mark -
-#pragma mark AdMobDelegate
-- (void)didReceiveAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didReceiveAd"];
-
-	if (adTop)
+#pragma mark GAD delegate methods
+- (void)adViewDidReceiveAd:(GADBannerView *)view
+{
+    if (adTop)
 	{
 		[_adView setFrame:TOP_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, -48);
+		_adView.frame = CGRectOffset(_adView.frame, 0, -50);
 		[_parentView addSubview:_adView];
 	}
 	else
 	{
 		[_adView setFrame:BOTTOM_AD_FRAME];
-		_adView.frame = CGRectOffset(_adView.frame, 0, 48);
+		_adView.frame = CGRectOffset(_adView.frame, 0, 50);
 		[_parentView addSubview:_adView];
 	}
 	
@@ -161,86 +221,33 @@
 	}
 }
 
-	// Sent when an ad request failed to load an ad
-- (void)didFailToReceiveAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didFailToReceiveAd"];
-
+- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
+{
 	if(adViewVisible)
 	{
-		[self _animate:adView up:adTop];
+		[self _animate:_adView up:adTop];
 		adViewVisible = FALSE;
 	}
 }
 
-- (NSString *)publisherIdForAd:(AdMobView *)adView {
-	return @"a14b84284a8b3d3";
-}
-
-- (void)didReceiveRefreshedAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didReceiveRefreshedAd"];
-}
-
-- (void)didFailToReceiveRefreshedAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didFailToReceiveRefreshedAd"];
-}
-
-- (void)willPresentFullScreenModalFromAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:willPresentFullScreenModalFromAd"];
-	[[[UIApplication sharedApplication] delegate] applicationWillResignActive:nil];
-}
-
-- (void)didPresentFullScreenModalFromAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didPresentFullScreenModalFromAd"];
-}
-
-- (void)willDismissFullScreenModalFromAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:willDismissFullScreenModalFromAd"];
-}
-
-- (void)didDismissFullScreenModalFromAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:didDismissFullScreenModalFromAd"];
-	[[[UIApplication sharedApplication] delegate] applicationDidBecomeActive:nil];
-}
-
-- (void)applicationWillTerminateFromAd:(AdMobView *)adView {
-	[FlurryAPI logEvent:@"Admob:applicationWillTerminateFromAd"];
-}
-
-
-#pragma mark -
-
-- (UIViewController *)currentViewControllerForAd:(AdMobView *)adView {
-	return _parentViewController;
-}
-
-- (void)_animate:(UIView*)adView up:(BOOL)up
+- (void)adViewWillPresentScreen:(GADBannerView *)adView
 {
-	if (up)
-	{
-			//if (adView.frame.origin.y == 480) 
-		{
-			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			adView.frame = CGRectOffset(adView.frame, 0, -50);
-			[UIView commitAnimations];	
-		}
-	}
-	else 
-	{
-			//if (adView.frame.origin.y == -50) 
-		{
-			[UIView beginAnimations:@"animateAdBannerUp" context:NULL];
-			adView.frame = CGRectOffset(adView.frame, 0, 50);
-			[UIView commitAnimations];
-		}
-	}
+    
 }
 
-
--(void) dealloc
+- (void)adViewWillDismissScreen:(GADBannerView *)adView
 {
-	[_adView release];
-	
-	[super dealloc];
+    
+}
+
+- (void)adViewDidDismissScreen:(GADBannerView *)adView
+{
+    
+}
+
+- (void)adViewWillLeaveApplication:(GADBannerView *)adView
+{
+    
 }
 
 @end
