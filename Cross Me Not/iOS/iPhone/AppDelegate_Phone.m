@@ -74,7 +74,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 		// Setup for high scores
 	scoreManager = [[ScoreManager alloc] init];
 	[scoreManager readBestTimes];	
-	
+    if([scoreManager _isGameCenterAvailable])
+    {
+        leaderboardController = [[GKLeaderboardViewController alloc] init];
+    }
+    else
+    {
+        [gameCenterButton removeFromSuperview];
+    }
+    
 		// Setup for In-App Purchase if user can purchase
 	if ([SKPaymentQueue canMakePayments]) 
 	{
@@ -334,6 +342,25 @@ void uncaughtExceptionHandler(NSException *exception) {
 	}
 }
 
+- (void) showLeaderboard
+{
+    if (leaderboardController != nil)
+    {
+        leaderboardController.leaderboardDelegate = self;
+        [placeHolderViewController presentModalViewController: leaderboardController animated: YES];
+    }
+}
+
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+    [placeHolderViewController dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)gameCenter:(id)sender
+{
+    [self showLeaderboard];
+}
+
 - (IBAction)startGame:(id)sender
 {
 	[FlurryAPI logEvent:@"1"];
@@ -378,6 +405,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)dealloc
 {
 	[window release];
+    [leaderboardController release];
 	[placeHolderViewController.view release];
 	[timerLabel release];
 	[glView release];

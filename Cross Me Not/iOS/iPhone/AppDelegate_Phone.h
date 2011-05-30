@@ -17,7 +17,7 @@
 
 @class EAGLView;
 
-@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, SKProductsRequestDelegate, SKPaymentTransactionObserver> 
+@interface AppDelegate_Phone : NSObject <UIApplicationDelegate,UIPickerViewDelegate, UIPickerViewDataSource, SKProductsRequestDelegate, SKPaymentTransactionObserver, GKLeaderboardViewControllerDelegate> 
 {
 @public
 	IBOutlet UIWindow *window;
@@ -27,6 +27,7 @@
 	IBOutlet UILabel *timerLabel;
 	IBOutlet UILabel *bestTimeLabel;
 	IBOutlet UIButton *removeAdsButton;
+    IBOutlet UIButton *gameCenterButton;
 	IBOutlet EAGLView *glView;
 
 		//SKProductsRequest* productRequest;
@@ -37,6 +38,7 @@
 	NSDate *timeCounter;
 	ScoreManager* scoreManager;
 	AdManager* adManager;
+    GKLeaderboardViewController *leaderboardController;
 
 	int currentLevel,gameEntryLevel;
 	BOOL appActive,adFree;
@@ -46,6 +48,7 @@
 - (IBAction)menuButton:(id)sender;
 - (IBAction)startGame:(id)sender;
 - (IBAction)infoButton:(id)sender;
+- (IBAction)gameCenter:(id)sender;
 - (IBAction)buyAdFree:(id)sender;
 -(void)setScoreLabelForLevel:(int)level;
 
