@@ -342,10 +342,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 	}
 }
 
-- (void) showLeaderboard
+- (void) showLeaderboardOfLevel:(int) level
 {
     if (leaderboardController != nil)
     {
+        leaderboardController.category = [NSString stringWithFormat:@"l%d",level];
         leaderboardController.leaderboardDelegate = self;
         [placeHolderViewController presentModalViewController: leaderboardController animated: YES];
     }
@@ -358,7 +359,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (IBAction)gameCenter:(id)sender
 {
-    [self showLeaderboard];
+    [self showLeaderboardOfLevel:currentLevel+1];
 }
 
 - (IBAction)startGame:(id)sender
