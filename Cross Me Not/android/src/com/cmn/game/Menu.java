@@ -40,7 +40,6 @@ public final class Menu extends Activity
     	Log.i("Menu", "onCreate");
 		super.onCreate(savedInstanceState);
 		
-		FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
 		
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		
@@ -130,6 +129,8 @@ public final class Menu extends Activity
     {
     	Log.i("Menu", "onStart");
     	super.onStart();
+
+    	FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
     	
     	_startButton.setEnabled(true);
     	_infoButton.setEnabled(true);
@@ -140,6 +141,8 @@ public final class Menu extends Activity
     {
     	_startButton.setEnabled(false);
     	_infoButton.setEnabled(false);
+
+    	FlurryAgent.onEndSession(this);
     	
     	Log.i("Menu", "onStop");
     	super.onStop();
@@ -149,8 +152,6 @@ public final class Menu extends Activity
     {
     	Log.i("Menu", "onDestroy");
     	super.onDestroy();
-    	
-		FlurryAgent.onEndSession(this);
     }
     
 	/**

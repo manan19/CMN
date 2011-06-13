@@ -2,6 +2,7 @@ package com.cmn.game;
 
 import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
+import com.flurry.android.FlurryAgent;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -66,12 +67,16 @@ public final class Game extends Activity
     protected void onStart()
     {
     	Log.i("Game", "onStart");
+    	FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
+
     	super.onStart();
     }
     
     protected void onStop()
     {
     	Log.i("Game", "onStop");
+    	FlurryAgent.onEndSession(this);
+
     	super.onStop();
     }
 

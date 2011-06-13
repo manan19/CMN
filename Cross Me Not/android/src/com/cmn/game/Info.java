@@ -3,6 +3,8 @@
  */
 package com.cmn.game;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -44,12 +46,14 @@ public class Info extends Activity {
     protected void onStart()
     {
     	Log.i("Info", "onStart");
+    	FlurryAgent.onStartSession(this, "VKMXGMLCV74L7HSMA9JQ");
     	super.onStart();
     }
     
     protected void onStop()
     {
     	Log.i("Info", "onStop");
+    	FlurryAgent.onEndSession(this);
     	super.onStop();
     }
 
