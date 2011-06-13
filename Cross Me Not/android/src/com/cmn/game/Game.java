@@ -1,14 +1,14 @@
 package com.cmn.game;
 
-import com.admob.android.ads.AdManager;
-import com.admob.android.ads.AdView;
-import com.flurry.android.FlurryAgent;
-
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
+
+import com.admob.android.ads.AdManager;
+import com.admob.android.ads.AdView;
+import com.flurry.android.FlurryAgent;
 
 /**
  * @author manan19

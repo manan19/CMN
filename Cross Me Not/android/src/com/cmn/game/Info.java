@@ -3,12 +3,12 @@
  */
 package com.cmn.game;
 
-import com.flurry.android.FlurryAgent;
-
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.flurry.android.FlurryAgent;
 
 /**
  * @author manan19
