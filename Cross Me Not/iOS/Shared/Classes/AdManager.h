@@ -9,6 +9,7 @@
 #import "FlurryAPI.h"
 #import <Foundation/Foundation.h>
 #import <iAd/ADBannerView.h>
+#import <iAd/iAd.h>
 #import "GADBannerView.h"
 
 #define TOP_AD_FRAME CGRectMake(0, 0, 320, 50)
