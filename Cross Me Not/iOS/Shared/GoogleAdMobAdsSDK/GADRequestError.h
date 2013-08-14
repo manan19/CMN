@@ -33,6 +33,23 @@ typedef enum {
   // The request was unable to be loaded before being timed out.
   kGADErrorTimeout,
 
+  // Will not send request because the interstitial object has already been
+  // used.
+  kGADErrorInterstitialAlreadyUsed,
+
+  // The mediation response was invalid.
+  kGADErrorMediationDataError,
+
+  // Error finding or creating a mediation ad network adapter.
+  kGADErrorMediationAdapterError,
+
+  // The mediation request was successful, but no ad was returned from any
+  // ad networks.
+  kGADErrorMediationNoFill,
+
+  // Attempting to pass an invalid ad size to an adapter.
+  kGADErrorMediationInvalidAdSize,
+
 } GADErrorCode;
 
 // This class represents the error generated due to invalid request parameters.

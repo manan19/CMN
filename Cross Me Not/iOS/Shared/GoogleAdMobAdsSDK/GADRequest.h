@@ -8,6 +8,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
+@protocol GADAdNetworkExtras;
+
 // Constant for getting test ads on the simulator using the testDevices method.
 #define GAD_SIMULATOR_ID @"Simulator"
 
@@ -24,8 +26,27 @@ typedef enum {
 // Creates an autoreleased GADRequest.
 + (GADRequest *)request;
 
-// Reserved for future use.
-@property (nonatomic, retain) NSDictionary *additionalParameters;
+#pragma mark Additional Parameters For Ad Networks
+
+// Ad networks may have additional parameters they accept. To pass these
+// parameters to them, create the ad network extras object for that network,
+// fill in the parameters, and register it here. The ad network should have a
+// header defining the interface for the 'extras' object to create. All
+// networks will have access to the basic settings you've set in this GADRequest
+// (gender, birthday, testing mode, etc.). If you register an extras object
+// that is the same class as one you have registered before, the previous
+// extras will be overwritten.
+- (void)registerAdNetworkExtras:(id<GADAdNetworkExtras>)extras;
+
+// Get the network extras defined for an ad network.
+- (id<GADAdNetworkExtras>)adNetworkExtrasFor:(Class<GADAdNetworkExtras>)clazz;
+
+// Unsets the extras for an ad network. |clazz| is the class which represents
+// that network's extras type.
+- (void)removeAdNetworkExtrasFor:(Class<GADAdNetworkExtras>)clazz;
+
+// Extras sent to the mediation server (if using Mediation). For future use.
+@property (nonatomic, retain) NSDictionary *mediationExtras;
 
 #pragma mark Collecting SDK Information
 
@@ -34,18 +55,7 @@ typedef enum {
 
 #pragma mark Testing
 
-// Test ads are returned to these devices.  Device identifiers are the same used
-// to register as a development device with Apple.  To obtain a value open the
-// Organizer (Window -> Organizer from Xcode), control-click or right-click on
-// the device's name, and choose "Copy Device Identifier".  Alternatively you
-// can obtain it through code using [[UIDevice currentDevice] uniqueIdentifier].
-//
-// For example:
-//   request.testDevices = [NSArray arrayWithObjects:
-//       GAD_SIMULATOR_ID,                               // Simulator
-//       //@"28ab37c3902621dd572509110745071f0101b124",  // Test iPhone 3G 3.0.1
-//       @"8cf09e81ef3ec5418c3450f7954e0e95db8ab200",    // Test iPod 4.3.1
-//       nil];
+// Add the device's identifier into this array for testing purposes.
 @property (nonatomic, retain) NSArray *testDevices;
 
 #pragma mark User Information
@@ -69,6 +79,30 @@ typedef enum {
 // @"Champs-Elysees Paris" or @"94041 US".
 - (void)setLocationWithDescription:(NSString *)locationDescription;
 
+// [Optional] This method allows you to specify whether you would like your app
+// to be treated as child-directed for purposes of the Children’s Online Privacy
+// Protection Act (COPPA) -
+// http://business.ftc.gov/privacy-and-security/childrens-privacy.
+//
+// If you call this method with YES, you are indicating that your app should be
+// treated as child-directed for purposes of the Children’s Online Privacy
+// Protection Act (COPPA).
+// If you call this method with NO, you are indicating that your app should not
+// be treated as child-directed for purposes of the Children’s Online Privacy
+// Protection Act (COPPA).
+// If you do not call this method, ad requests will include no indication of how
+// you would like your app treated with respect to COPPA.
+//
+// By setting this method, you certify that this notification is accurate and
+// you are authorized to act on behalf of the owner of the app.  You understand
+// that abuse of this setting may result in termination of your Google account.
+//
+// Note: it may take some time for this designation to be fully implemented in
+// applicable Google services.
+// This designation will only apply to ad requests for which you have set this
+// method.
+- (void)tagForChildDirectedTreatment:(BOOL)childDirectedTreatment;
+
 #pragma mark Contextual Information
 
 // A keyword is a word or phrase describing the current activity of the user
@@ -83,7 +117,13 @@ typedef enum {
 #pragma mark -
 #pragma mark Deprecated Methods
 
-// Please use testDevices instead.
+// Accesses the additionalParameters for the "GoogleAdmob" ad network. Please
+// use -registerAdNetworkExtras: method above and pass an instance of
+// GADAdMobExtras instead.
+@property (nonatomic, retain) NSDictionary *additionalParameters;
+
+// This property has been deprecated with the latest SDK releases. Please use
+// testDevices.
 @property (nonatomic, getter=isTesting) BOOL testing;
 
 @end
