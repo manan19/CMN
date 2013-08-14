@@ -163,7 +163,7 @@
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner 
 {
-	[FlurryAPI logEvent:@"iAd:bannerViewDidLoadAd"];
+	[Flurry logEvent:@"iAd:bannerViewDidLoadAd"];
 
 	if (!adViewVisible) {
 		[self _animate:banner up:!adTop];
@@ -173,7 +173,7 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-	[FlurryAPI logEvent:@"iAd:didFailToReceiveAdWithError"];
+	[Flurry logEvent:@"iAd:didFailToReceiveAdWithError"];
 
 		//iAds failed
 	NSLog(@"%@",[error localizedDescription]);
@@ -188,14 +188,14 @@
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	[FlurryAPI logEvent:@"iAd:bannerViewActionShouldBegin"];
+	[Flurry logEvent:@"iAd:bannerViewActionShouldBegin"];
 	[[[UIApplication sharedApplication] delegate] applicationWillResignActive:nil];
 	return YES;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
 	[[[UIApplication sharedApplication] delegate] applicationDidBecomeActive:nil];
-	[FlurryAPI logEvent:@"iAd:bannerViewActionDidFinish"];
+	[Flurry logEvent:@"iAd:bannerViewActionDidFinish"];
 }
 
 #pragma mark -

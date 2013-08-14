@@ -8,6 +8,10 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>com.mp.crossmenot</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -24,8 +28,6 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow_Phone</string>
-	<key>UILaunchImageFile</key>
-	<string>Default.png</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIStatusBarStyle</key>

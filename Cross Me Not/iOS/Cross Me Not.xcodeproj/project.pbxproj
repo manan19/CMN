@@ -13,6 +13,9 @@
 		2860E328111B887F00E27156 /* AppDelegate_Phone.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* AppDelegate_Phone.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		3250660612288D4B00D8A986 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3250660512288D4B00D8A986 /* StoreKit.framework */; };
+		3283F08317BC3497009FD5EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3283F08217BC3497009FD5EB /* Images.xcassets */; };
+		3283F08A17BC37E6009FD5EB /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283F08917BC37E6009FD5EB /* libFlurry.a */; };
+		3283F08C17BC380E009FD5EB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283F08B17BC380E009FD5EB /* Security.framework */; };
 		32BA160517A1D56900355465 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BA160417A1D56900355465 /* Default-568@2x.png */; };
 		5947ED751279788300B9A004 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5947ED741279788300B9A004 /* GameKit.framework */; };
 		5947EEF6127A8BB900B9A004 /* ScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5947EEF5127A8BB900B9A004 /* ScoreManager.m */; };
@@ -33,7 +36,6 @@
 		599A7C1D127AA11400A308DC /* MainWindow_Phone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59F2AD2E1156C2DD003BA387 /* MainWindow_Phone.xib */; };
 		599A7C1E127AA12000A308DC /* MainWindow_Phone.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59F2AD1E1156C0CA003BA387 /* MainWindow_Phone.strings */; };
 		59A43F9F12F9464300F057A2 /* AdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59A43F9E12F9464300F057A2 /* AdManager.m */; };
-		59B6F66912FF8D8A00280C8A /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59B6F66812FF8D8A00280C8A /* libFlurry.a */; };
 		59CCD927122784BF00C35FF3 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CCD926122784BF00C35FF3 /* iAd.framework */; };
 		59CCDAF11227B35E00C35FF3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59CCDAF01227B35E00C35FF3 /* Icon@2x.png */; };
 		59D109FB115614F800A1C2DD /* flip.gif in Resources */ = {isa = PBXBuildFile; fileRef = 59D109FA115614F800A1C2DD /* flip.gif */; };
@@ -59,6 +61,10 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		3250660512288D4B00D8A986 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3283F08217BC3497009FD5EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Cross Me Not/Images.xcassets"; sourceTree = "<group>"; };
+		3283F08417BC361D009FD5EB /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		3283F08917BC37E6009FD5EB /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = Shared/FlurryLib/libFlurry.a; sourceTree = "<group>"; };
+		3283F08B17BC380E009FD5EB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32BA160417A1D56900355465 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Cross_Me_Not_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cross_Me_Not_Prefix.pch; sourceTree = "<group>"; };
 		5947ED741279788300B9A004 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -84,8 +90,6 @@
 		5984A1C312989B8C0013C17E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		59A43F9D12F9464300F057A2 /* AdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdManager.h; sourceTree = "<group>"; };
 		59A43F9E12F9464300F057A2 /* AdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdManager.m; sourceTree = "<group>"; };
-		59B6F66712FF8D8A00280C8A /* FlurryAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAPI.h; sourceTree = "<group>"; };
-		59B6F66812FF8D8A00280C8A /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		59CCD926122784BF00C35FF3 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		59CCDAF01227B35E00C35FF3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		59D109FA115614F800A1C2DD /* flip.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flip.gif; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3283F08C17BC380E009FD5EB /* Security.framework in Frameworks */,
+				3283F08A17BC37E6009FD5EB /* libFlurry.a in Frameworks */,
 				59FB38BB13930C4E00611566 /* SystemConfiguration.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -129,7 +135,6 @@
 				5947ED751279788300B9A004 /* GameKit.framework in Frameworks */,
 				5984A1C012989B8C0013C17E /* AudioToolbox.framework in Frameworks */,
 				5984A1C412989B8C0013C17E /* MessageUI.framework in Frameworks */,
-				59B6F66912FF8D8A00280C8A /* libFlurry.a in Frameworks */,
 				59FB38B913930AE400611566 /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,7 +175,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				59FB38BA13930C4E00611566 /* SystemConfiguration.framework */,
+				3283F08217BC3497009FD5EB /* Images.xcassets */,
 				59CCDAF01227B35E00C35FF3 /* Icon@2x.png */,
 				59F2B09C1157374B003BA387 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Cross_Me_Not-Info.plist */,
@@ -195,6 +200,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3283F08B17BC380E009FD5EB /* Security.framework */,
+				3283F08917BC37E6009FD5EB /* libFlurry.a */,
+				59FB38BA13930C4E00611566 /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -258,8 +266,7 @@
 		59B6F66612FF8D8A00280C8A /* FlurryLib */ = {
 			isa = PBXGroup;
 			children = (
-				59B6F66712FF8D8A00280C8A /* FlurryAPI.h */,
-				59B6F66812FF8D8A00280C8A /* libFlurry.a */,
+				3283F08417BC361D009FD5EB /* Flurry.h */,
 			);
 			name = FlurryLib;
 			path = Shared/FlurryLib;
@@ -305,6 +312,13 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 2F25E4W6WP;
+					};
+				};
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Cross Me Not" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -336,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				599A7C1C127AA0FD00A308DC /* Default.png in Resources */,
+				3283F08317BC3497009FD5EB /* Images.xcassets in Resources */,
 				59D109FB115614F800A1C2DD /* flip.gif in Resources */,
 				599A7C1A127AA0EC00A308DC /* InfoPlist.strings in Resources */,
 				599A7C1E127AA12000A308DC /* MainWindow_Phone.strings in Resources */,
@@ -383,6 +398,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -405,6 +423,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -443,6 +464,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

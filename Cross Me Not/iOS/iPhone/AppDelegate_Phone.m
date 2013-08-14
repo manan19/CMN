@@ -10,7 +10,7 @@
 #import "EAGLView.h"
 
 void uncaughtExceptionHandler(NSException *exception) {
-    [FlurryAPI logError:@"Uncaught" message:@"Crash!" exception:exception];
+    [Flurry logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
 
 @implementation AppDelegate_Phone
@@ -30,8 +30,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 {
 		// Analytics
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-	[FlurryAPI setAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
-	[FlurryAPI startSession:@"HZITZ7GERIG6LHLM5U7Q"];
+	[Flurry setAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+	[Flurry startSession:@"HZITZ7GERIG6LHLM5U7Q"];
 
 		// Initial UI Setup
 	[placeHolderViewController.view addSubview:menuView];
@@ -318,7 +318,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (IBAction)infoButton:(id)sender
 {
-	[FlurryAPI logEvent:@"Viewed Info Page"];
+	[Flurry logEvent:@"Viewed Info Page"];
 	
 	if([infoView superview] == placeHolderViewController.view)
 	{
@@ -364,13 +364,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (IBAction)startGame:(id)sender
 {
-	[FlurryAPI logEvent:@"1"];
+	[Flurry logEvent:@"1"];
 	[glView newGraph:currentLevel];
 	
-	[FlurryAPI logEvent:@"2"];
+	[Flurry logEvent:@"2"];
 	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
 	
-	[FlurryAPI logEvent:@"3"];
+	[Flurry logEvent:@"3"];
 	if ([menuView superview] == placeHolderViewController.view)
 	{
 		[adManager setParentView:glView andPosition:TRUE];
@@ -381,20 +381,20 @@ void uncaughtExceptionHandler(NSException *exception) {
 		[placeHolderViewController.view addSubview:glView];
 		[UIView commitAnimations];
 	}
-	[FlurryAPI logEvent:@"4"];
+	[Flurry logEvent:@"4"];
 
 		//Reset Counter
 	time = 0.0f;
 	[timeCounter release];
 	timeCounter = [[NSDate date] retain];
-	[FlurryAPI logEvent:@"5"];
+	[Flurry logEvent:@"5"];
 
 		//Set Label
 	[timerLabel setText:[NSString stringWithFormat:@"%.2f",time]];
-	[FlurryAPI logEvent:@"6"];
+	[Flurry logEvent:@"6"];
 	
 	glView->playingGame = TRUE;
-	[FlurryAPI logEvent:@"7"];
+	[Flurry logEvent:@"7"];
 }
 
 - (void) endGame
