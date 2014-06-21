@@ -3,7 +3,7 @@
 //  Cross Me Not
 //
 //  Created by Manan Patel on 10/28/10.
-//  Copyright 2010 ngmoco:). All rights reserved.
+//  Copyright 2010 :). All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
