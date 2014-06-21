@@ -37,7 +37,6 @@
 			
             if (!renderer)
             {
-                [self release];
                 return nil;
             }
         }
@@ -66,7 +65,7 @@
 - (void) newGraph:(int) lvl
 {
 	if (renderer->graph)
-		[renderer->graph release];
+		renderer->graph = nil;
 	renderer->graph = [[Graph alloc] initGraph:lvl clippingRect:clippingRect];
 	
 	[self layoutSubviews];
@@ -193,14 +192,6 @@
 		}
 		[renderer render];
 	}
-}
-
-- (void)dealloc
-{
-    [renderer release];
-	[aView release];
-	
-    [super dealloc];
 }
 
 #pragma mark -

@@ -5,7 +5,7 @@
 
 -(id)init
 {
-	[super init];
+	self = [super init];
 	edgeCount = 0;
 	vertexCount = 0;
 	selectedVertex = -1;
@@ -545,7 +545,7 @@
 	
 	if ([self checkGraphForIntersections] <= (lvl+1)*2)
 	{
-		[self initGraph:lvl clippingRect:clippingRect];
+		self = [self initGraph:lvl clippingRect:clippingRect];
 	}
 	
 	return self;

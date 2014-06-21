@@ -77,8 +77,6 @@
 		}
 	}
 	];
-	
-	[lbquery release];
 }
 
 - (void) _authenticationChanged
@@ -102,7 +100,7 @@
 {
 	if( [self _isGameCenterAvailable] && [GKLocalPlayer localPlayer].isAuthenticated )
 	{
-		GKScore *scoreReporter = [[[GKScore alloc] initWithCategory:category] autorelease];
+		GKScore *scoreReporter = [[GKScore alloc] initWithCategory:category];
 		scoreReporter.value = score;
 		
 		[scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
@@ -216,16 +214,6 @@
 {
 	return [[bestTimes objectForKey:[NSString stringWithFormat:@"%d",level]] floatValue];
 }
-
-
-- (void) dealloc
-{
-	[bestTimes release];
-	
-	[super dealloc];
-}
-
-
 
 @end
 

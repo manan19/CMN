@@ -94,7 +94,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 	currentLevel = 0;
 	gameEntryLevel = 0;
 	[glView newGraph:0];
-	timeCounter = [[NSDate date] retain];
+	timeCounter = [NSDate date];
 	time = 0;
 	[NSTimer scheduledTimerWithTimeInterval:(1/30) target:self selector:@selector(update) userInfo:nil repeats:YES];
 	
@@ -109,8 +109,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 	appActive = TRUE;
-	[timeCounter release];
-	timeCounter = [[NSDate date] retain];
+	timeCounter = [NSDate date];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -137,12 +136,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 		
 		if (![product.productIdentifier compare:productIdentifierAdFree]) 
 		{
-			productAdFree = [product retain];
+			productAdFree = product;
 			[menuView addSubview:removeAdsButton];
 		}
 	}
-	
-	[productsReq release];
 }
 
 
@@ -202,8 +199,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 		{
 				//Update Time
 			time += [[NSDate date] timeIntervalSinceDate:timeCounter];
-			[timeCounter release];
-			timeCounter = [[NSDate date] retain];
+			timeCounter = [NSDate date];
 				//Set Label
 			[timerLabel setText:[NSString stringWithFormat:@"%.2f",time]];
 		}
@@ -247,8 +243,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not connect to Store" message:@"Please try again later" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
-		[alert release];
-			// Optionally, display an error here.
 	}
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 	[removeAdsButton setEnabled:TRUE];
@@ -385,8 +379,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 		//Reset Counter
 	time = 0.0f;
-	[timeCounter release];
-	timeCounter = [[NSDate date] retain];
+	timeCounter = [NSDate date];
 	[Flurry logEvent:@"5"];
 
 		//Set Label
@@ -401,25 +394,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 {
 	NSString *currTime = timerLabel.text;
 	[scoreManager newScore:[currTime floatValue] forLevel:currentLevel+1 sendToGC:TRUE];
-}
-
-- (void)dealloc
-{
-	[window release];
-    [leaderboardController release];
-	[placeHolderViewController.view release];
-	[timerLabel release];
-	[glView release];
-	[menuView release];
-	[infoView release];
-	[timeCounter release];
-	[productAdFree release];
-	[removeAdsButton release];
-	[productsReq release];
-	[adManager release];
-    [scoreManager release];
-
-	[super dealloc];
 }
 
 @end

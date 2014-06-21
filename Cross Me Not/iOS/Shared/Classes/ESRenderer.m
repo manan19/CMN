@@ -18,10 +18,4 @@
 	return NO;
 }
 
--(void)dealloc 
-{
-    [graph release];	
-    [super dealloc];
-}
-
 @end

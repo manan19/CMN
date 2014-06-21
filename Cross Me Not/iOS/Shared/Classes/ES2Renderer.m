@@ -40,7 +40,6 @@ enum {
 		
         if (!context || ![EAGLContext setCurrentContext:context] || ![self loadShaders])
         {
-            [self release];
             return nil;
         }
 		
@@ -340,10 +339,7 @@ enum {
     if ([EAGLContext currentContext] == context)
         [EAGLContext setCurrentContext:nil];
 	
-    [context release];
     context = nil;
-	
-    [super dealloc];
 }
 
 @end

@@ -17,8 +17,22 @@
     {
 		adViewVisible = FALSE;
 		
-        [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://api.hostip.info/country.php"]] delegate:self startImmediately:YES];
-    }	
+        ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
+        iadView.frame = CGRectOffset(iadView.frame, 0, 50);
+        if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
+        {
+            [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
+            [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
+        }
+        else
+        {
+            [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
+            [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
+        }
+        
+        [iadView setDelegate:self];
+        _adView = iadView;			
+    }
     return self;
 }
 
@@ -59,7 +73,6 @@
 -(void) shutdown
 {
 	[_adView removeFromSuperview];
-	[_adView release];
 	_adView = NULL;
 }
 
@@ -85,43 +98,6 @@
 		}
 	}
 }
-
-
--(void) dealloc
-{
-	[_adView release];
-    [_parentView release];
-    [_parentViewController release];
-	
-	[super dealloc];
-}
-
-#pragma mark -
-#pragma mark NSURLConnection delegate methods
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    ADBannerView *iadView = [[ADBannerView alloc] initWithFrame:BOTTOM_AD_FRAME];
-    iadView.frame = CGRectOffset(iadView.frame, 0, 50);
-    if( [[[UIDevice currentDevice] systemVersion] compare:@"4.2" options:NSNumericSearch] != NSOrderedAscending )
-    {
-        [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, nil]];
-        [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifierPortrait];
-    }
-    else 
-    {
-        [iadView setRequiredContentSizeIdentifiers:[NSSet setWithObjects:ADBannerContentSizeIdentifier320x50, nil]];
-        [iadView setCurrentContentSizeIdentifier:ADBannerContentSizeIdentifier320x50];
-    }
-    
-    [iadView setDelegate:self];
-    _adView = iadView;			
-}
-
 
 #pragma mark -
 #pragma mark ADBannerViewDelegate methods
